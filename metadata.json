@@ -1,0 +1,6 @@
+{
+  "name": "Energía Solar Profesional",
+  "description": "Plataforma institucional y comercial de soluciones de energía solar: paneles, inversores, baterías, estructuras, soporte técnico y cotizador interactivo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
