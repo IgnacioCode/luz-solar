@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,7 +13,7 @@ import SolarCalculator from './components/SolarCalculator';
 import FaqSection from './components/FaqSection';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
-import { Phone, ArrowUp, MessageSquare } from 'lucide-react';
+import { ArrowUp, MessageSquare } from 'lucide-react';
 
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);

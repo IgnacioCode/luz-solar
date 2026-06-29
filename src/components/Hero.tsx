@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { ShieldCheck, Calendar, Award, ArrowRight, Calculator, FileText } from 'lucide-react';
 
 interface HeroProps {
