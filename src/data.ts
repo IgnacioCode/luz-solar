@@ -178,7 +178,7 @@ export const solutionsData: Solution[] = [
       'Monitoreo remoto simple en tu celular para ver tu ahorro en tiempo real.',
       'Diseño arquitectónicamente estético que respeta la fachada de tu vivienda.'
     ],
-    recommendedKit: 'Sistema Híbrido Helios Home (3kW a 5kW con almacenamiento de Litio)'
+    recommendedKit: 'Sistema Híbrido LUZ SOLAR Home (3kW a 5kW con almacenamiento de Litio)'
   },
   {
     id: 's2',
@@ -253,7 +253,7 @@ export const processStepsData: ProcessStep[] = [
     stepNumber: 5,
     title: 'Monitoreo y Soporte',
     description: 'Conectamos tu inversor al Wi-Fi, te enseñamos a usar la app para seguir la generación diaria y te acompañamos con nuestro soporte post venta preventivo.',
-    badge: 'Garantía Helios'
+    badge: 'Garantía LUZ SOLAR'
   }
 ];
 

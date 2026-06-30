@@ -55,15 +55,14 @@ export default function App() {
   };
 
   const handleFloatingWhatsApp = () => {
-    const text = 'Hola Helios Solar! Estaba visitando su página web institucional y me gustaría realizar una consulta general sobre sus sistemas solares.';
+    const text = 'Hola Luz Solar! Estaba visitando su página web institucional y me gustaría realizar una consulta general sobre sus sistemas solares.';
     window.open(`https://wa.me/5491123456789?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
-    <div id="app-root" className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 overflow-x-hidden antialiased">
+    <div id="app-root" className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-[#6DA42C] selection:text-slate-950 overflow-x-hidden antialiased">
       {/* Sticky Navigation Header */}
       <Navbar
-        onOpenCalculator={handleOpenCalculator}
         onScrollToSection={handleScrollToSection}
       />
 
@@ -81,8 +80,8 @@ export default function App() {
         {/* Tabbed Sector Solutions */}
         <Solutions onScrollToSection={handleScrollToSection} />
 
-        {/* Sizing & Savings Calculator */}
-        <SolarCalculator onPreFillInquiry={handlePreFillInquiry} />
+        {/* Sizing & Savings Calculator <SolarCalculator onPreFillInquiry={handlePreFillInquiry} />*/}
+        
 
         {/* Commercial Catalog */}
         <Products />
@@ -90,11 +89,11 @@ export default function App() {
         {/* Visual Methodology Timeline */}
         <Process />
 
-        {/* Security and Post-Sales Guarantees */}
-        <PostSales />
+        {/* Security and Post-Sales Guarantees <PostSales />*/}
+        
 
-        {/* Why Choose Us */}
-        <WhyChooseUs />
+        {/* Why Choose Us <WhyChooseUs />*/}
+        
 
         {/* FAQ Accordion */}
         <FaqSection />
@@ -106,7 +105,6 @@ export default function App() {
       {/* Institutional Footer */}
       <Footer
         onScrollToSection={handleScrollToSection}
-        onOpenCalculator={handleOpenCalculator}
       />
 
       {/* Floating Action Buttons */}
@@ -125,7 +123,7 @@ export default function App() {
         {/* Direct WhatsApp Float */}
         <button
           onClick={handleFloatingWhatsApp}
-          className="p-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-2xl hover:scale-110 active:scale-95 transition-all cursor-pointer relative group"
+          className="p-4 rounded-full bg-[#6DA42C] hover:bg-[#7DBA35] text-slate-950 shadow-2xl hover:scale-110 active:scale-95 transition-all cursor-pointer relative group"
           aria-label="Hablar por WhatsApp de guardia"
         >
           <MessageSquare className="w-6 h-6" />

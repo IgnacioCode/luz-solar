@@ -29,7 +29,7 @@ export default function Products() {
   }, [selectedCategory, searchQuery]);
 
   const handleWhatsAppConsultation = (productName: string) => {
-    const baseText = `Hola Helios Solar! Estaba revisando su catálogo web y me interesa consultar por el producto: *${productName}*. ¿Podrían enviarme especificaciones técnicas de cotización y plazos de entrega? Muchas gracias.`;
+    const baseText = `Hola Luz Solar! Estaba revisando su catálogo web y me interesa consultar por el producto: *${productName}*. ¿Podrían enviarme especificaciones técnicas de cotización y plazos de entrega? Muchas gracias.`;
     const encodedText = encodeURIComponent(baseText);
     const whatsappUrl = `https://wa.me/5491123456789?text=${encodedText}`; // Mock local number, customizable
     window.open(whatsappUrl, '_blank');
@@ -37,17 +37,14 @@ export default function Products() {
 
   return (
     <section id="productos" className="py-24 bg-slate-50 relative overflow-hidden">
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#19A7CE]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[#57C5B6]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#006CB5]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-[#6DA42C]/5 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <span className="text-xs font-bold tracking-widest text-[#19A7CE] font-mono uppercase bg-[#19A7CE]/10 px-3.5 py-1.5 rounded-full border border-[#19A7CE]/25">
-            Catálogo de Equipamiento
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B2447]">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#006CB5]">
             Componentes solares y eléctricos homologados
           </h2>
           <p className="text-slate-600 text-base leading-relaxed">
@@ -65,7 +62,7 @@ export default function Products() {
               placeholder="Buscar panel, batería de litio, inversor..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans text-sm shadow-sm"
+              className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans text-sm shadow-sm"
             />
             {searchQuery && (
               <button
@@ -85,7 +82,7 @@ export default function Products() {
                 onClick={() => setSelectedCategory(category.value)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold tracking-wide transition-all cursor-pointer border ${
                   selectedCategory === category.value
-                    ? 'bg-[#19A7CE] text-white border-[#19A7CE] shadow-sm'
+                    ? 'bg-[#006CB5] text-white border-[#006CB5] shadow-sm'
                     : 'bg-white text-slate-600 border-slate-200 hover:border-slate-350 hover:text-slate-800'
                 }`}
               >
@@ -97,11 +94,11 @@ export default function Products() {
 
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="group flex flex-col h-full bg-white border border-slate-200 hover:border-[#19A7CE]/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 animate-in fade-in zoom-in-95 duration-200"
+                className="group flex flex-col h-full bg-white border border-slate-200 hover:border-[#006CB5]/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 animate-in fade-in zoom-in-95 duration-200"
               >
                 {/* Image Frame */}
                 <div className="relative aspect-video w-full overflow-hidden bg-slate-50 border-b border-slate-100">
@@ -112,7 +109,7 @@ export default function Products() {
                     referrerPolicy="no-referrer"
                   />
                   {product.badge && (
-                    <span className="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#F27D26] text-white shadow-md">
+                    <span className="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#F98A1E] text-white shadow-md">
                       {product.badge}
                     </span>
                   )}
@@ -121,10 +118,10 @@ export default function Products() {
                 {/* Content */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div className="space-y-2">
-                    <span className="text-[10px] font-mono tracking-widest text-[#19A7CE] uppercase font-bold">
+                    <span className="text-[10px] font-mono tracking-widest text-[#006CB5] uppercase font-bold">
                       {categories.find(c => c.value === product.category)?.label || product.category}
                     </span>
-                    <h3 className="text-sm font-bold text-[#0B2447] group-hover:text-[#19A7CE] transition-colors line-clamp-2 h-10">
+                    <h3 className="text-sm font-bold text-[#006CB5] group-hover:text-[#006CB5] transition-colors line-clamp-2 h-10">
                       {product.name}
                     </h3>
                     <p className="text-xs text-slate-500 line-clamp-3 leading-relaxed font-normal">
@@ -136,16 +133,16 @@ export default function Products() {
                   <div className="pt-5 mt-4 border-t border-slate-100 flex items-center gap-2">
                     <button
                       onClick={() => setSelectedProduct(product)}
-                      className="p-2.5 rounded-lg border border-slate-200 text-slate-400 hover:text-[#19A7CE] hover:bg-slate-50 hover:border-[#19A7CE]/50 transition-all cursor-pointer"
+                      className="p-2.5 rounded-lg border border-slate-200 text-slate-400 hover:text-[#006CB5] hover:bg-slate-50 hover:border-[#006CB5]/50 transition-all cursor-pointer"
                       title="Especificaciones técnicas"
                     >
                       <Info className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handleWhatsAppConsultation(product.name)}
-                      className="flex-1 flex items-center justify-center space-x-1.5 px-3 py-2.5 rounded-lg bg-slate-50 hover:bg-[#F27D26] text-slate-700 hover:text-white border border-slate-200 hover:border-[#F27D26] transition-all text-xs font-bold cursor-pointer shadow-sm group/btn"
+                      className="flex-1 flex items-center justify-center space-x-1.5 px-3 py-2.5 rounded-lg bg-slate-50 hover:bg-[#F98A1E] text-slate-700 hover:text-white border border-slate-200 hover:border-[#F98A1E] transition-all text-xs font-bold cursor-pointer shadow-sm group/btn"
                     >
-                      <MessageSquare className="w-4 h-4 text-[#F27D26] group-hover/btn:text-white" />
+                      <MessageSquare className="w-4 h-4 text-[#F98A1E] group-hover/btn:text-white" />
                       <span>Consultar</span>
                     </button>
                   </div>
@@ -161,7 +158,7 @@ export default function Products() {
                 setSelectedCategory('all');
                 setSearchQuery('');
               }}
-              className="mt-4 inline-flex items-center text-xs font-bold text-[#19A7CE] hover:underline"
+              className="mt-4 inline-flex items-center text-xs font-bold text-[#006CB5] hover:underline"
             >
               Restablecer filtros
             </button>
@@ -178,7 +175,7 @@ export default function Products() {
           >
             {/* Modal Header */}
             <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <span className="text-xs font-mono tracking-widest text-[#19A7CE] uppercase font-bold">
+              <span className="text-xs font-mono tracking-widest text-[#006CB5] uppercase font-bold">
                 Ficha Técnica de Componente
               </span>
               <button
@@ -201,7 +198,7 @@ export default function Products() {
                   />
                 </div>
                 <div className="flex-1 space-y-2">
-                  <h3 className="text-lg font-bold text-[#0B2447]">{selectedProduct.name}</h3>
+                  <h3 className="text-lg font-bold text-[#006CB5]">{selectedProduct.name}</h3>
                   <p className="text-xs text-slate-500 leading-relaxed font-normal">{selectedProduct.description}</p>
                 </div>
               </div>
@@ -214,7 +211,7 @@ export default function Products() {
                 <ul className="space-y-2.5">
                   {selectedProduct.specifications.map((spec, i) => (
                     <li key={i} className="flex items-start space-x-2 text-xs text-slate-600">
-                      <Check className="w-4 h-4 text-[#57C5B6] shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-[#6DA42C] shrink-0 mt-0.5" />
                       <span>{spec}</span>
                     </li>
                   ))}
@@ -223,7 +220,7 @@ export default function Products() {
 
               {/* Trust Badge */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-250 text-xs text-slate-500 flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-[#57C5B6] shrink-0 mt-1.5" />
+                <div className="w-2 h-2 rounded-full bg-[#6DA42C] shrink-0 mt-1.5" />
                 <p>Todos nuestros equipos se entregan con embalaje original de fábrica, número de serie registrado para la garantía oficial y certificado de homologación eléctrica internacional.</p>
               </div>
             </div>
@@ -241,7 +238,7 @@ export default function Products() {
                   handleWhatsAppConsultation(selectedProduct.name);
                   setSelectedProduct(null);
                 }}
-                className="flex-1 flex items-center justify-center space-x-2 py-3 rounded-full bg-[#F27D26] text-white hover:bg-[#F27D26]/90 text-xs font-bold shadow-lg shadow-orange-200 transition-all cursor-pointer"
+                className="flex-1 flex items-center justify-center space-x-2 py-3 rounded-full bg-[#F98A1E] text-white hover:bg-[#F98A1E]/90 text-xs font-bold shadow-lg shadow-[#F98A1E]/20 transition-all cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Consultar por WhatsApp</span>

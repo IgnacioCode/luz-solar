@@ -48,7 +48,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
   };
 
   const handleWhatsAppDirect = () => {
-    let customText = `Hola Helios Solar! Me gustaría recibir asesoramiento personalizado.\n\n` +
+    let customText = `Hola Luz Solar! Me gustaría recibir asesoramiento personalizado.\n\n` +
                      `- *Nombre:* ${name || 'Interesado'}\n` +
                      `- *Teléfono:* ${phone || 'No provisto'}\n` +
                      `- *Ubicación:* ${location || 'No provista'}\n` +
@@ -75,8 +75,8 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
   return (
     <section id="contacto" className="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-100">
       {/* Background radial gradients */}
-      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-[#19A7CE]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-[#57C5B6]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-[#006CB5]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-[#6DA42C]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -86,10 +86,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
           {/* Right Column: High conversion block */}
           <div className="lg:col-span-5 space-y-8 lg:sticky lg:top-28">
             <div className="space-y-4">
-              <span className="text-xs font-bold tracking-widest text-[#19A7CE] font-mono uppercase bg-[#19A7CE]/10 px-3.5 py-1.5 rounded-full border border-[#19A7CE]/25 inline-block">
-                Contacto e Ingeniería
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B2447] leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#006CB5] leading-tight">
                 Empezá a ahorrar con energía solar
               </h2>
               <p className="text-slate-600 text-sm leading-relaxed font-normal">
@@ -100,39 +97,39 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
             {/* Quick Contact Info Items */}
             <div className="space-y-4">
               <div className="flex items-center space-x-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
-                <div className="p-2.5 rounded-lg bg-[#57C5B6]/10 text-[#57C5B6]">
+                <div className="p-2.5 rounded-lg bg-[#6DA42C]/10 text-[#6DA42C]">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="text-[10px] text-slate-500 font-mono uppercase">Línea de Guardia WhatsApp</p>
-                  <p className="text-xs sm:text-sm font-bold text-[#0B2447] mt-0.5">+54 9 11 2345-6789</p>
+                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">+54 9 11 2345-6789</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
-                <div className="p-2.5 rounded-lg bg-[#19A7CE]/10 text-[#19A7CE]">
+                <div className="p-2.5 rounded-lg bg-[#006CB5]/10 text-[#006CB5]">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="text-[10px] text-slate-500 font-mono uppercase">Departamento de Ingeniería</p>
-                  <p className="text-xs sm:text-sm font-bold text-[#0B2447] mt-0.5">ingenieria@heliossolar.com.ar</p>
+                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">ingenieria@LUZ SOLARsolar.com.ar</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
-                <div className="p-2.5 rounded-lg bg-orange-500/10 text-[#F27D26]">
+                <div className="p-2.5 rounded-lg bg-[#F98A1E]/10 text-[#F98A1E]">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="text-[10px] text-slate-500 font-mono uppercase">Zona de Cobertura Principal</p>
-                  <p className="text-xs sm:text-sm font-bold text-[#0B2447] mt-0.5">Todo el país (Despachos y Obras LLave en mano)</p>
+                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">Todo el país (Despachos y Obras LLave en mano)</p>
                 </div>
               </div>
             </div>
 
             {/* Trust highlights */}
             <div className="p-5 rounded-2xl bg-white border border-slate-200 flex items-start gap-3 shadow-sm">
-              <ShieldCheck className="w-5 h-5 text-[#57C5B6] shrink-0 mt-0.5" />
+              <ShieldCheck className="w-5 h-5 text-[#6DA42C] shrink-0 mt-0.5" />
               <p className="text-[11px] text-slate-500 leading-relaxed">Tus datos están protegidos bajo estricto secreto profesional. Los utilizaremos únicamente para modelar el diseño eléctrico preliminar y contactarte.</p>
             </div>
           </div>
@@ -143,11 +140,11 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
             {/* Success State */}
             {isSubmitted ? (
               <div className="p-8 sm:p-12 text-center space-y-6 animate-in fade-in duration-300">
-                <div className="w-16 h-16 rounded-2xl bg-[#57C5B6]/10 border border-[#57C5B6]/20 flex items-center justify-center text-[#57C5B6] mx-auto">
+                <div className="w-16 h-16 rounded-2xl bg-[#6DA42C]/10 border border-[#6DA42C]/20 flex items-center justify-center text-[#6DA42C] mx-auto">
                   <CheckCircle className="w-10 h-10 animate-pulse" />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-[#0B2447]">¡Presupuesto Solicitado!</h3>
+                  <h3 className="text-2xl font-bold text-[#006CB5]">¡Presupuesto Solicitado!</h3>
                   <p className="text-sm text-slate-600 max-w-sm mx-auto leading-relaxed font-normal">
                     Hemos recibido tus datos con éxito. Un ingeniero de nuestro departamento técnico ya está analizando tu perfil de consumo.
                   </p>
@@ -160,16 +157,16 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                   </h4>
                   <div className="space-y-3.5">
                     <div className="flex items-start space-x-3 text-xs">
-                      <Clock4 className="w-4 h-4 text-[#F27D26] shrink-0 mt-0.5" />
+                      <Clock4 className="w-4 h-4 text-[#F98A1E] shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-bold text-[#0B2447]">Análisis Técnico (Siguiente Hora)</p>
+                        <p className="font-bold text-[#006CB5]">Análisis Técnico (Siguiente Hora)</p>
                         <p className="text-[11px] text-slate-500 mt-0.5 font-normal">Calculamos tu radiación e inclinación óptima según tu ubicación ({location || 'tu localidad'}).</p>
                       </div>
                     </div>
                     <div className="flex items-start space-x-3 text-xs">
-                      <Phone className="w-4 h-4 text-[#19A7CE] shrink-0 mt-0.5" />
+                      <Phone className="w-4 h-4 text-[#006CB5] shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-bold text-[#0B2447]">Llamado de Validación (Siguientes 24hs)</p>
+                        <p className="font-bold text-[#006CB5]">Llamado de Validación (Siguientes 24hs)</p>
                         <p className="text-[11px] text-slate-500 mt-0.5 font-normal">Te llamamos al {phone} para resolver dudas menores y afinar el presupuesto.</p>
                       </div>
                     </div>
@@ -179,7 +176,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                 <div className="pt-4 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                   <button
                     onClick={handleWhatsAppDirect}
-                    className="w-full sm:w-1/2 flex items-center justify-center space-x-1.5 py-3 rounded-full bg-[#57C5B6] text-white hover:bg-[#57C5B6]/90 text-xs font-bold shadow-md transition-all cursor-pointer"
+                    className="w-full sm:w-1/2 flex items-center justify-center space-x-1.5 py-3 rounded-full bg-[#6DA42C] text-white hover:bg-[#6DA42C]/90 text-xs font-bold shadow-md transition-all cursor-pointer"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>Acelerar por WhatsApp</span>
@@ -196,7 +193,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
               /* Active Form State */
               <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
                 <div className="space-y-1">
-                  <h3 className="text-lg font-bold text-[#0B2447]">Formulario de Presupuesto Técnico</h3>
+                  <h3 className="text-lg font-bold text-[#006CB5]">Formulario de Presupuesto Técnico</h3>
                   <p className="text-xs text-slate-500 font-normal">Los campos marcados con * son requeridos para elaborar el diseño.</p>
                 </div>
 
@@ -216,7 +213,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                       placeholder="Ej. Juan Pérez"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans"
                     />
                   </div>
 
@@ -229,7 +226,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                       placeholder="Ej. +54 9 11 1234 5678"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans"
                     />
                   </div>
                 </div>
@@ -244,7 +241,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                       placeholder="Ej. juan.perez@email.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans"
                     />
                   </div>
 
@@ -256,7 +253,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                       placeholder="Ej. Rosario, Santa Fe"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans"
                     />
                   </div>
                 </div>
@@ -268,7 +265,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                     <select
                       value={clientType}
                       onChange={(e) => setClientType(e.target.value as any)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans"
                     >
                       <option value="hogar">Hogar (Residencial)</option>
                       <option value="comercio">Comercio (Oficina/Taller)</option>
@@ -285,7 +282,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                       placeholder="Ej. 45000"
                       value={monthlyBill}
                       onChange={(e) => setMonthlyBill(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans"
+                      className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans"
                     />
                   </div>
                 </div>
@@ -298,7 +295,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                     placeholder="Contanos si tenés cortes de luz frecuentes, espacio disponible en el techo (losas, chapas), o si necesitás alimentar un boyero rural..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#19A7CE] focus:ring-1 focus:ring-[#19A7CE] transition-all font-sans resize-none"
+                    className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#006CB5] focus:ring-1 focus:ring-[#006CB5] transition-all font-sans resize-none"
                   />
                 </div>
 
@@ -307,7 +304,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                   <button
                     type="button"
                     onClick={handleWhatsAppDirect}
-                    className="w-full sm:w-1/2 flex items-center justify-center space-x-2 py-3.5 rounded-full border border-[#57C5B6]/30 bg-[#57C5B6]/5 hover:bg-[#57C5B6]/10 text-[#57C5B6] text-xs font-bold transition-all cursor-pointer"
+                    className="w-full sm:w-1/2 flex items-center justify-center space-x-2 py-3.5 rounded-full border border-[#6DA42C]/30 bg-[#6DA42C]/5 hover:bg-[#6DA42C]/10 text-[#6DA42C] text-xs font-bold transition-all cursor-pointer"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>Hablar por WhatsApp</span>
@@ -315,7 +312,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-1/2 flex items-center justify-center space-x-2 py-3.5 rounded-full bg-[#F27D26] hover:bg-orange-600 text-white text-xs font-bold shadow-lg shadow-orange-200 disabled:opacity-50 transition-all cursor-pointer transform active:scale-95"
+                    className="w-full sm:w-1/2 flex items-center justify-center space-x-2 py-3.5 rounded-full bg-[#F98A1E] hover:bg-[#E47412] text-white text-xs font-bold shadow-lg shadow-[#F98A1E]/20 disabled:opacity-50 transition-all cursor-pointer transform active:scale-95"
                   >
                     {isSubmitting ? (
                       <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

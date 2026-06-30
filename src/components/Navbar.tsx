@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Sun, Zap, Menu, X, Phone, Calculator } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 
 interface NavbarProps {
-  onOpenCalculator: () => void;
   onScrollToSection: (sectionId: string) => void;
 }
 
-export default function Navbar({ onOpenCalculator, onScrollToSection }: NavbarProps) {
+export default function Navbar({ onScrollToSection }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -24,17 +23,26 @@ export default function Navbar({ onOpenCalculator, onScrollToSection }: NavbarPr
 
   const menuItems = [
     { label: 'Beneficios', id: 'beneficios' },
-    { label: 'Productos', id: 'productos' },
     { label: 'Soluciones', id: 'soluciones' },
-    { label: 'Cómo Trabajamos', id: 'proceso' },
-    { label: 'Soporte Post Venta', id: 'post-venta' },
+    { label: 'Productos', id: 'productos' },
+    { label: 'Cómo trabajamos', id: 'proceso' },
     { label: 'Preguntas', id: 'preguntas' },
+    { label: 'Contacto', id: 'contacto' },
   ];
 
   const handleLinkClick = (id: string) => {
     setIsOpen(false);
     onScrollToSection(id);
   };
+
+  const logoTextClass = isScrolled ? 'text-[#006CB5]' : 'text-white';
+  const logoSubTextClass = isScrolled ? 'text-[#6DA42C]' : 'text-white/75';
+  const menuTextClass = isScrolled
+    ? 'text-slate-600 hover:text-[#006CB5] decoration-[#006CB5]'
+    : 'text-white/90 hover:text-white decoration-[#F98A1E] drop-shadow-sm';
+  const mobileButtonClass = isScrolled
+    ? 'text-slate-600 hover:text-[#006CB5] hover:bg-slate-100'
+    : 'text-white hover:text-white hover:bg-white/10';
 
   return (
     <nav
@@ -45,34 +53,38 @@ export default function Navbar({ onOpenCalculator, onScrollToSection }: NavbarPr
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+      <div className="max-w-[92rem] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+        <div className="flex items-center justify-between gap-6 xl:gap-10">
           {/* Logo */}
           <div
             id="navbar-logo"
-            className="flex items-center space-x-2.5 cursor-pointer group"
+            className="flex shrink-0 items-center space-x-2.5 cursor-pointer group"
             onClick={() => handleLinkClick('hero')}
           >
-            <div className="w-8 h-8 bg-[#0B2447] rounded-lg flex items-center justify-center shadow-md">
-              <div className="w-3.5 h-3.5 bg-[#F27D26] rotate-45 transform group-hover:rotate-90 transition-transform duration-500"></div>
+            <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-xl bg-white/95 p-1.5 shadow-md ring-1 ring-white/20 transition-transform duration-300 group-hover:scale-105">
+              <img
+                src="/logoLuzSolarSolo.png"
+                alt="Logo Luz Solar"
+                className="h-full w-full object-contain"
+              />
             </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-[#0B2447] leading-none">
-                HELIOS<span className="text-[#19A7CE]">SOLAR</span>
+            <div className="flex flex-col items-center">
+              <span className={`text-xl font-bold tracking-tight ${logoTextClass} leading-none transition-colors`}>
+                LUZ <span className="text-[#F98A1E]">SOLAR</span>
               </span>
-              <span className="text-[9px] tracking-widest text-slate-500 font-mono font-bold uppercase leading-tight">
-                Energía Sustentable
+              <span className={`text-[10px] tracking-[0.28em] ${logoSubTextClass} font-mono font-bold uppercase leading-tight text-center transition-colors`}>
+                SRL
               </span>
             </div>
           </div>
 
           {/* Desktop Menu */}
-          <div id="desktop-menu" className="hidden lg:flex items-center space-x-8">
+          <div id="desktop-menu" className="hidden lg:flex flex-1 min-w-0 items-center justify-center gap-6 xl:gap-9 2xl:gap-11">
             {menuItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleLinkClick(item.id)}
-                className="text-sm font-semibold uppercase tracking-wider text-slate-600 hover:text-[#0B2447] hover:underline decoration-[#19A7CE] underline-offset-4 decoration-2 transition-all cursor-pointer"
+                className={`whitespace-nowrap text-[11px] xl:text-xs 2xl:text-sm font-semibold uppercase tracking-wider hover:underline underline-offset-4 decoration-2 transition-all cursor-pointer ${menuTextClass}`}
               >
                 {item.label}
               </button>
@@ -80,19 +92,11 @@ export default function Navbar({ onOpenCalculator, onScrollToSection }: NavbarPr
           </div>
 
           {/* Desktop CTAs */}
-          <div id="desktop-ctas" className="hidden lg:flex items-center space-x-3">
-            <button
-              id="nav-calc-btn"
-              onClick={onOpenCalculator}
-              className="flex items-center space-x-1.5 px-5 py-2 text-sm font-bold border-2 border-[#19A7CE] text-[#19A7CE] hover:bg-[#19A7CE]/5 rounded-full transition-colors cursor-pointer"
-            >
-              <Calculator className="w-4 h-4 text-[#19A7CE]" />
-              <span>Presupuesto</span>
-            </button>
+          <div id="desktop-ctas" className="hidden lg:flex shrink-0 items-center space-x-3">
             <button
               id="nav-contact-btn"
               onClick={() => handleLinkClick('contacto')}
-              className="flex items-center space-x-1.5 px-5 py-2 text-sm font-bold rounded-full bg-[#F27D26] hover:bg-orange-600 text-white shadow-lg shadow-orange-200 transition-all cursor-pointer transform active:scale-95"
+              className="flex items-center space-x-1.5 px-5 py-2 text-sm font-bold rounded-full bg-[#F98A1E] hover:bg-[#E47412] text-white shadow-lg shadow-[#F98A1E]/20 transition-all cursor-pointer transform active:scale-95"
             >
               <Phone className="w-4 h-4" />
               <span>WhatsApp</span>
@@ -103,7 +107,7 @@ export default function Navbar({ onOpenCalculator, onScrollToSection }: NavbarPr
           <div id="mobile-menu-btn" className="flex items-center lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-slate-600 hover:text-[#0B2447] p-2 rounded-lg hover:bg-slate-100 transition-colors"
+              className={`${mobileButtonClass} p-2 rounded-lg transition-colors`}
               aria-label="Alternar menú"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -120,25 +124,15 @@ export default function Navbar({ onOpenCalculator, onScrollToSection }: NavbarPr
               <button
                 key={item.id}
                 onClick={() => handleLinkClick(item.id)}
-                className="block w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#0B2447] transition-colors"
+                className="block w-full text-left px-3 py-2.5 rounded-lg text-base font-semibold text-slate-600 hover:bg-slate-50 hover:text-[#006CB5] transition-colors"
               >
                 {item.label}
               </button>
             ))}
             <div className="pt-4 pb-2 border-t border-slate-200 px-3 space-y-2">
               <button
-                onClick={() => {
-                  setIsOpen(false);
-                  onOpenCalculator();
-                }}
-                className="flex items-center justify-center space-x-2 w-full px-4 py-3 text-sm font-semibold rounded-lg border-2 border-[#19A7CE] text-[#19A7CE] hover:bg-[#19A7CE]/5"
-              >
-                <Calculator className="w-5 h-5 text-[#19A7CE]" />
-                <span>Calcular Ahorro Fotovoltaico</span>
-              </button>
-              <button
                 onClick={() => handleLinkClick('contacto')}
-                className="flex items-center justify-center space-x-2 w-full px-4 py-3 text-sm font-bold rounded-lg bg-[#F27D26] text-white hover:bg-orange-600 shadow-lg shadow-orange-200"
+                className="flex items-center justify-center space-x-2 w-full px-4 py-3 text-sm font-bold rounded-lg bg-[#F98A1E] text-white hover:bg-[#E47412] shadow-lg shadow-[#F98A1E]/20"
               >
                 <Phone className="w-5 h-5" />
                 <span>Solicitar Asesoramiento</span>

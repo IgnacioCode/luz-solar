@@ -16,16 +16,13 @@ export default function FaqSection() {
   return (
     <section id="preguntas" className="py-24 bg-white relative overflow-hidden">
       {/* Background gradients */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#19A7CE]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#006CB5]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-4 mb-16">
-          <span className="text-xs font-bold tracking-widest text-[#19A7CE] font-mono uppercase bg-[#19A7CE]/10 px-3.5 py-1.5 rounded-full border border-[#19A7CE]/25">
-            Resolviendo Dudas
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0B2447]">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#006CB5]">
             Preguntas Frecuentes
           </h2>
           <p className="text-slate-600 text-sm leading-relaxed font-normal">
@@ -42,7 +39,7 @@ export default function FaqSection() {
               <div
                 key={faq.id}
                 id={`faq-item-${faq.id}`}
-                className="rounded-2xl border border-slate-200 bg-white overflow-hidden transition-all duration-300 shadow-sm hover:border-[#19A7CE]/30"
+                className="rounded-2xl border border-slate-200 bg-white overflow-hidden transition-all duration-300 shadow-sm hover:border-[#006CB5]/30"
               >
                 {/* Accordion Trigger Button */}
                 <button
@@ -50,8 +47,8 @@ export default function FaqSection() {
                   className="w-full flex items-center justify-between p-5 sm:p-6 text-left hover:bg-slate-50/50 transition-colors cursor-pointer"
                 >
                   <div className="flex items-start space-x-3.5">
-                    <HelpCircle className="w-5 h-5 text-[#19A7CE] shrink-0 mt-0.5" />
-                    <span className="text-sm sm:text-base font-bold text-[#0B2447] pr-4">
+                    <HelpCircle className="w-5 h-5 text-[#006CB5] shrink-0 mt-0.5" />
+                    <span className="text-sm sm:text-base font-bold text-[#006CB5] pr-4">
                       {faq.question}
                     </span>
                   </div>
@@ -76,22 +73,6 @@ export default function FaqSection() {
               </div>
             );
           })}
-        </div>
-
-        {/* Custom inquiry callout */}
-        <div className="mt-12 text-center p-6 bg-slate-50 border border-slate-200 border-dashed rounded-2xl max-w-xl mx-auto">
-          <p className="text-xs text-slate-500 leading-relaxed">
-            ¿Tenés alguna otra pregunta sobre inversores trifásicos, almacenamiento híbrido o legislación impositiva?
-          </p>
-          <button
-            onClick={() => {
-              const el = document.getElementById('contacto');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="mt-3.5 text-xs font-bold text-[#19A7CE] hover:text-[#0B2447] underline underline-offset-4 cursor-pointer"
-          >
-            Preguntar a nuestro ingeniero de guardia
-          </button>
         </div>
 
       </div>
