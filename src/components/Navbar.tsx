@@ -23,6 +23,7 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
 
   const menuItems = [
     { label: 'Beneficios', id: 'beneficios' },
+    { label: 'Servicios', id: 'alcance' },
     { label: 'Soluciones', id: 'soluciones' },
     { label: 'Productos', id: 'productos' },
     { label: 'Cómo trabajamos', id: 'proceso' },

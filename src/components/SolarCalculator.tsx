@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Calculator, HelpCircle, ArrowRight, MessageSquare, Check, Sparkles, Zap, Leaf } from 'lucide-react';
+import { buildWhatsAppUrl } from '../siteConfig';
 
 interface SolarCalculatorProps {
   onPreFillInquiry: (data: {
@@ -74,8 +75,7 @@ export default function SolarCalculator({ onPreFillInquiry }: SolarCalculatorPro
       `- *Orientación del Techo:* ${roofType.toUpperCase()}\n\n` +
       `¿Me podrían contactar para coordinar un presupuesto técnico formal? ¡Gracias!`;
     
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/5491123456789?text=${encoded}`, '_blank');
+    window.open(buildWhatsAppUrl(text), '_blank');
   };
 
   const handlePreFillForm = () => {

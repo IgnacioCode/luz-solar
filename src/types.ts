@@ -1,9 +1,14 @@
 export interface Product {
   id: string;
+  slug: string;
   name: string;
   category: 'panels' | 'inverters' | 'batteries' | 'controllers' | 'structures' | 'electrical';
   description: string;
   specifications: string[];
+  idealFor: string[];
+  detailIntro: string;
+  detailPoints: string[];
+  consultationFocus: string;
   image: string;
   badge?: string;
 }

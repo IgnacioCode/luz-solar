@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Benefits from './components/Benefits';
+import ServiceScope from './components/ServiceScope';
 import Products from './components/Products';
 import Solutions from './components/Solutions';
 import Process from './components/Process';
@@ -14,6 +15,7 @@ import FaqSection from './components/FaqSection';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import { ArrowUp, MessageSquare } from 'lucide-react';
+import { buildWhatsAppUrl } from './siteConfig';
 
 export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -55,8 +57,8 @@ export default function App() {
   };
 
   const handleFloatingWhatsApp = () => {
-    const text = 'Hola Luz Solar! Estaba visitando su página web institucional y me gustaría realizar una consulta general sobre sus sistemas solares.';
-    window.open(`https://wa.me/5491123456789?text=${encodeURIComponent(text)}`, '_blank');
+    const text = 'Hola Luz Solar! Estaba visitando su página web y me gustaría realizar una consulta sobre energía solar, equipos, kits o instalación.';
+    window.open(buildWhatsAppUrl(text), '_blank');
   };
 
   return (
@@ -76,6 +78,9 @@ export default function App() {
 
         {/* Core Benefits */}
         <Benefits />
+
+        {/* Commercial Scope */}
+        <ServiceScope />
 
         {/* Tabbed Sector Solutions */}
         <Solutions onScrollToSection={handleScrollToSection} />

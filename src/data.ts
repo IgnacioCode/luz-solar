@@ -30,6 +30,7 @@ export const benefitsData: Benefit[] = [
 export const productsData: Product[] = [
   {
     id: 'p1',
+    slug: 'panel-solar-monocristalino-perc-450w-550w',
     name: 'Panel Solar Monocristalino PERC 450W / 550W Tier 1',
     category: 'panels',
     description: 'Módulo fotovoltaico de alta eficiencia con tecnología de celdas partidas (Half-Cell) y resistencia a climas extremos (granizo y vientos).',
@@ -39,11 +40,20 @@ export const productsData: Product[] = [
       'Certificación Bloomberg Tier 1',
       'Excelente desempeño con baja radiación solar'
     ],
+    idealFor: ['Hogares', 'Comercios', 'Kits on-grid', 'Kits híbridos'],
+    detailIntro: 'Es el componente principal para convertir radiación solar en energía eléctrica. Se usa como base de sistemas residenciales, comerciales y kits solares dimensionados a medida.',
+    detailPoints: [
+      'Conviene cuando se busca buena generación diaria en techos o estructuras con espacio disponible.',
+      'Se combina con inversores on-grid, híbridos u off-grid según el tipo de instalación.',
+      'La cantidad de paneles se define por consumo mensual, espacio, orientación y objetivo de ahorro.'
+    ],
+    consultationFocus: 'dimensionar cantidad de paneles, potencia de inversor y estructura necesaria',
     image: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=800',
     badge: 'Más Vendido'
   },
   {
     id: 'p2',
+    slug: 'panel-solar-bifacial-monocristalino-550w',
     name: 'Panel Solar Bifacial Monocristalino 550W',
     category: 'panels',
     description: 'Módulo de doble cara que absorbe radiación por el frente y por el dorso mediante el rebote de luz (albedo), incrementando la generación hasta un 25%.',
@@ -53,11 +63,20 @@ export const productsData: Product[] = [
       'Ideal para montaje en suelo, campos o pérgolas elevadas',
       'Mayor durabilidad contra la degradación PID'
     ],
+    idealFor: ['Campos', 'Estructuras elevadas', 'Comercios con playa', 'Instalaciones en suelo'],
+    detailIntro: 'Panel pensado para proyectos donde la cara posterior puede aprovechar el reflejo del suelo o de superficies claras, aumentando la producción total del sistema.',
+    detailPoints: [
+      'Rinde especialmente bien en instalaciones elevadas, pérgolas solares o montaje sobre suelo.',
+      'Necesita revisar albedo, altura de montaje y sombras para justificar la inversión.',
+      'Puede formar parte de kits rurales, comerciales o instalaciones de mayor escala.'
+    ],
+    consultationFocus: 'evaluar si el lugar permite aprovechar la generación bifacial',
     image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=800',
     badge: 'Alta Tecnología'
   },
   {
     id: 'p3',
+    slug: 'inversor-hibrido-inteligente-deye-solis-5kw-10kw',
     name: 'Inversor Híbrido Inteligente Deye / Solis 5kW / 10kW',
     category: 'inverters',
     description: 'El cerebro de la instalación solar. Gestiona de manera eficiente los paneles, las baterías de almacenamiento, los consumos y la red eléctrica.',
@@ -67,11 +86,20 @@ export const productsData: Product[] = [
       'Pantalla táctil LCD de configuración intuitiva',
       'Monitoreo móvil por Wi-Fi / App móvil integrado'
     ],
+    idealFor: ['Hogares con cortes', 'Comercios críticos', 'Sistemas con baterías', 'Autoconsumo con respaldo'],
+    detailIntro: 'Inversor indicado cuando se busca ahorro diario, posibilidad de respaldo ante cortes y crecimiento futuro con baterías.',
+    detailPoints: [
+      'Administra paneles, baterías, red eléctrica y cargas críticas desde un mismo equipo.',
+      'Permite priorizar autoconsumo, respaldo o carga de baterías según la necesidad.',
+      'La potencia se define por consumos simultáneos, autonomía requerida y capacidad de paneles.'
+    ],
+    consultationFocus: 'definir potencia, banco de baterías y consumos críticos a respaldar',
     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800',
     badge: 'Premium'
   },
   {
     id: 'p4',
+    slug: 'inversor-on-grid-monofasico-trifasico-solis',
     name: 'Inversor On-Grid Monofásico y Trifásico Solis',
     category: 'inverters',
     description: 'Inversores para inyección directa a red. Pensados para el autoconsumo inmediato en comercios y oficinas con consumos mayoritariamente diurnos.',
@@ -81,10 +109,19 @@ export const productsData: Product[] = [
       'Diseño compacto sin ventiladores externos (silencioso)',
       'Apto para Ley de Generación Distribuida'
     ],
+    idealFor: ['Comercios', 'Oficinas', 'Industrias pequeñas', 'Hogares con consumo diurno'],
+    detailIntro: 'Equipo para instalaciones conectadas a red, orientado a reducir consumo eléctrico durante las horas de sol sin utilizar baterías.',
+    detailPoints: [
+      'Es una opción eficiente cuando el mayor consumo ocurre de día.',
+      'Puede acompañarse con trámite de generación distribuida si corresponde.',
+      'Se dimensiona según potencia contratada, perfil de consumo y disponibilidad de techo.'
+    ],
+    consultationFocus: 'evaluar autoconsumo, conexión monofásica o trifásica y retorno estimado',
     image: 'https://images.unsplash.com/photo-1621905252507-b354bc25edac?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'p5',
+    slug: 'bateria-litio-lifepo4-48v-100ah-4-8kwh',
     name: 'Batería de Litio LiFePO4 48V 100Ah (4.8kWh)',
     category: 'batteries',
     description: 'Módulos de Litio Ferro-Fosfato de diseño modular para rack. Carga ultra rápida, alta densidad energética y máxima seguridad operativa.',
@@ -94,11 +131,20 @@ export const productsData: Product[] = [
       'Garantía oficial del fabricante por 10 años',
       'Conexión en paralelo escalable hasta 15 unidades'
     ],
+    idealFor: ['Respaldo ante cortes', 'Sistemas híbridos', 'Off-grid exigente', 'Cargas críticas'],
+    detailIntro: 'Batería modular para almacenar energía y sostener consumos cuando no hay sol o cuando la red eléctrica falla.',
+    detailPoints: [
+      'Aporta mayor vida útil y mejor profundidad de descarga que alternativas tradicionales.',
+      'Se puede escalar sumando módulos si la autonomía requerida crece.',
+      'Debe seleccionarse junto con el inversor para asegurar compatibilidad de comunicación y carga.'
+    ],
+    consultationFocus: 'calcular autonomía, potencia de respaldo y compatibilidad con el inversor',
     image: 'https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?auto=format&fit=crop&q=80&w=800',
     badge: 'Larga Vida Útil'
   },
   {
     id: 'p6',
+    slug: 'bateria-gel-ciclo-profundo-12v-200ah',
     name: 'Batería de Gel Ciclo Profundo 12V 200Ah',
     category: 'batteries',
     description: 'Batería de ácido-plomo regulada por válvula (VRLA) con electrolito gelificado, ideal para respaldo y sistemas de energía aislada económicos.',
@@ -108,10 +154,19 @@ export const productsData: Product[] = [
       'Hasta 1.200 ciclos al 50% de descarga',
       'Ideal para puestos de campo de bajo y medio consumo'
     ],
+    idealFor: ['Kits rurales simples', 'Boyeros', 'Iluminación', 'Respaldo económico'],
+    detailIntro: 'Alternativa de almacenamiento robusta para consumos moderados, instalaciones aisladas y proyectos donde se prioriza inversión inicial contenida.',
+    detailPoints: [
+      'Funciona bien en sistemas simples de baja y media demanda.',
+      'Requiere controlar profundidad de descarga para cuidar su vida útil.',
+      'Se suele usar en bancos de baterías para lograr el voltaje y autonomía necesarios.'
+    ],
+    consultationFocus: 'armar banco de baterías según consumo, autonomía y presupuesto',
     image: 'https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'p7',
+    slug: 'regulador-carga-mppt-epever-40a-60a',
     name: 'Regulador de Carga MPPT EPEVER 40A / 60A',
     category: 'controllers',
     description: 'Controlador de carga inteligente de alta eficiencia que maximiza la transferencia de energía desde los paneles a las baterías.',
@@ -121,10 +176,19 @@ export const productsData: Product[] = [
       'Pantalla digital para ver estado de carga e historial de generación',
       'Protección electrónica contra polaridad inversa y sobrecarga'
     ],
+    idealFor: ['Kits off-grid', 'Bancos de baterías', 'Casillas rurales', 'Sistemas de baja potencia'],
+    detailIntro: 'Controlador que optimiza la carga de baterías desde los paneles solares, especialmente en sistemas aislados.',
+    detailPoints: [
+      'Ayuda a extraer más energía disponible del arreglo fotovoltaico.',
+      'Protege las baterías y mejora el control de carga del sistema.',
+      'Se elige según corriente, voltaje del banco de baterías y potencia de paneles.'
+    ],
+    consultationFocus: 'validar corriente, voltaje y cantidad de paneles del kit',
     image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'p8',
+    slug: 'estructuras-montaje-aluminio-al6005-t5',
     name: 'Estructuras de Montaje de Aluminio Al6005-T5',
     category: 'structures',
     description: 'Perfilería de aluminio anodizado y herrajes de acero inoxidable preensamblados de alta durabilidad para resistir ráfagas de viento de hasta 130 km/h.',
@@ -134,10 +198,19 @@ export const productsData: Product[] = [
       'Instalación rápida mediante uniones autoperforantes aisladas',
       'Ángulos de inclinación ajustables para optimizar la captación invernal'
     ],
+    idealFor: ['Techos de chapa', 'Techos de teja', 'Montaje en suelo', 'Instalaciones a medida'],
+    detailIntro: 'Sistema mecánico que fija los paneles al techo o al suelo con la inclinación y seguridad adecuadas para cada instalación.',
+    detailPoints: [
+      'Debe elegirse según tipo de cubierta, orientación, viento y cantidad de paneles.',
+      'Una estructura correcta evita filtraciones, vibraciones y pérdidas por mala inclinación.',
+      'Es parte clave del dimensionamiento, no un accesorio genérico.'
+    ],
+    consultationFocus: 'relevar tipo de techo, medidas, orientación y cantidad de módulos',
     image: 'https://images.unsplash.com/photo-1548613053-220ef3db44af?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'p9',
+    slug: 'tablero-protecciones-electricas-ac-dc',
     name: 'Tablero de Protecciones Eléctricas Integradas AC/DC',
     category: 'electrical',
     description: 'Tablero premontado diseñado bajo normativas AEA para salvaguardar la integridad de los equipos solares, el inmueble y los usuarios.',
@@ -147,11 +220,20 @@ export const productsData: Product[] = [
       'Gabinete estanco IP65 resistente al polvo y la humedad con visor transparente',
       'Probado y cableado listo para su interconexión segura'
     ],
+    idealFor: ['Instalaciones completas', 'Kits solares', 'Hogares', 'Comercios'],
+    detailIntro: 'Conjunto de protecciones para cuidar equipos, instalación eléctrica y personas, tanto del lado de paneles como del lado de corriente alterna.',
+    detailPoints: [
+      'Reduce riesgos por sobretensiones, cortocircuitos y fallas de aislación.',
+      'Debe adaptarse a la potencia del sistema, tipo de inversor y normativa aplicable.',
+      'Permite entregar una instalación más prolija, mantenible y segura.'
+    ],
+    consultationFocus: 'definir protecciones AC/DC correctas para el sistema completo',
     image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800',
     badge: 'Seguridad Certificada'
   },
   {
     id: 'p10',
+    slug: 'cable-solar-fotovoltaico-mc4-4mm-6mm',
     name: 'Cable Solar Fotovoltaico MC4 de 4mm y 6mm',
     category: 'electrical',
     description: 'Conductores de cobre estañado de múltiples filamentos con doble aislamiento XLPE para tendidos a la intemperie y conexiones estancas.',
@@ -161,9 +243,31 @@ export const productsData: Product[] = [
       'Conectores tipo MC4 con estanqueidad IP68 instalados a medida',
       'Disponibles en colores rojo (positivo) y negro (negativo) para evitar errores'
     ],
+    idealFor: ['Conexionado de paneles', 'Kits solares', 'Reposiciones', 'Instaladores'],
+    detailIntro: 'Cableado específico para instalaciones fotovoltaicas expuestas a intemperie, temperatura y radiación UV.',
+    detailPoints: [
+      'No conviene reemplazarlo por cable común cuando el tramo queda expuesto al exterior.',
+      'La sección se define según corriente, distancia y caída de tensión admisible.',
+      'Puede entregarse como insumo suelto o parte de un kit armado.'
+    ],
+    consultationFocus: 'calcular metros, sección y conectores necesarios para la instalación',
     image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800'
   }
 ];
+
+export const productCategoryLabels: Record<Product['category'] | 'all', string> = {
+  all: 'Todos',
+  panels: 'Paneles Solares',
+  inverters: 'Inversores',
+  batteries: 'Baterías',
+  controllers: 'Reguladores',
+  structures: 'Estructuras',
+  electrical: 'Insumos / Cables',
+};
+
+export function getProductBySlug(slug: string) {
+  return productsData.find((product) => product.slug === slug);
+}
 
 export const solutionsData: Solution[] = [
   {
@@ -353,5 +457,17 @@ export const faqsData: FaqItem[] = [
     question: '¿Realizan el trámite de medidor bidireccional de Generación Distribuida?',
     answer: 'Sí. Nos encargamos del relevamiento, diseño de los planos eléctricos y la firma digital del ingeniero matriculado para presentar toda la documentación técnica ante la distribuidora de energía eléctrica de tu zona, completando el trámite para que puedas vender tu excedente energético de forma legal y segura.',
     category: 'Servicios'
+  },
+  {
+    id: 'faq7',
+    question: '¿Publican precios o conviene pedir consulta?',
+    answer: 'La página puede mostrar productos y orientar precios cuando estén validados, pero la cotización final se confirma por WhatsApp porque depende de marca disponible, cantidad, envío, instalación y dimensionamiento del sistema.',
+    category: 'Cotización'
+  },
+  {
+    id: 'faq8',
+    question: '¿Desde dónde venden y cómo entregan los productos?',
+    answer: 'La base comercial está en Morón y hacen envíos a todo el país. Por el momento no se comunica tienda, depósito o punto fijo de retiro: la entrega o retiro se coordina según cada operación.',
+    category: 'Entrega'
   }
 ];

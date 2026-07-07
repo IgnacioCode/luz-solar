@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, MessageSquare, Send, CheckCircle, Clock4, ShieldCheck } from 'lucide-react';
+import { Phone, MapPin, MessageSquare, Send, CheckCircle, Clock4, ShieldCheck } from 'lucide-react';
+import { buildWhatsAppUrl, siteConfig } from '../siteConfig';
 
 interface ContactFormProps {
   preFilledData: {
@@ -31,22 +32,6 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
     }
   }, [preFilledData]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMessage('');
-    if (!name || !phone || !email) {
-      setErrorMessage('Por favor complete los campos obligatorios: Nombre, Teléfono e Email.');
-      return;
-    }
-
-    setIsSubmitting(true);
-    // Simulate API request delay
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1200);
-  };
-
   const handleWhatsAppDirect = () => {
     let customText = `Hola Luz Solar! Me gustaría recibir asesoramiento personalizado.\n\n` +
                      `- *Nombre:* ${name || 'Interesado'}\n` +
@@ -56,8 +41,23 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                      `- *Factura Eléctrica:* $${Number(monthlyBill).toLocaleString('es-AR')} ARS\n` +
                      `- *Consulta:* ${message || 'Solicito cotización para sistema de paneles solares.'}`;
     
-    const encoded = encodeURIComponent(customText);
-    window.open(`https://wa.me/5491123456789?text=${encoded}`, '_blank');
+    window.open(buildWhatsAppUrl(customText), '_blank');
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage('');
+    if (!name || !phone || !email) {
+      setErrorMessage('Por favor complete los campos obligatorios: Nombre, Teléfono e Email.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setTimeout(() => {
+      handleWhatsAppDirect();
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }, 500);
   };
 
   const handleResetForm = () => {
@@ -101,18 +101,18 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-slate-500 font-mono uppercase">Línea de Guardia WhatsApp</p>
-                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">+54 9 11 2345-6789</p>
+                  <p className="text-[10px] text-slate-500 font-mono uppercase">WhatsApp Comercial</p>
+                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">{siteConfig.whatsapp.display}</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-4 p-4 rounded-xl bg-white border border-slate-200 shadow-sm">
                 <div className="p-2.5 rounded-lg bg-[#006CB5]/10 text-[#006CB5]">
-                  <Mail className="w-5 h-5" />
+                  <ShieldCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-slate-500 font-mono uppercase">Departamento de Ingeniería</p>
-                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">ingenieria@LUZ SOLARsolar.com.ar</p>
+                  <p className="text-[10px] text-slate-500 font-mono uppercase">Servicio</p>
+                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">Venta, kits, dimensionamiento e instalación</p>
                 </div>
               </div>
 
@@ -122,7 +122,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                 </div>
                 <div>
                   <p className="text-[10px] text-slate-500 font-mono uppercase">Zona de Cobertura Principal</p>
-                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">Todo el país (Despachos y Obras LLave en mano)</p>
+                  <p className="text-xs sm:text-sm font-bold text-[#006CB5] mt-0.5">{siteConfig.location.base} + {siteConfig.location.coverage}</p>
                 </div>
               </div>
             </div>
@@ -319,7 +319,7 @@ export default function ContactForm({ preFilledData }: ContactFormProps) {
                     ) : (
                       <>
                         <Send className="w-4 h-4" />
-                        <span>Pedir Presupuesto</span>
+                        <span>Enviar por WhatsApp</span>
                       </>
                     )}
                   </button>

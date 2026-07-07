@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ShieldCheck, Award, ArrowRight, Calculator } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface HeroProps {
   onScrollToSection: (sectionId: string) => void;
@@ -74,13 +74,13 @@ export default function Hero({ onScrollToSection, onOpenCalculator }: HeroProps)
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
               Energía solar para <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F98A1E] to-[#6DA42C] font-extrabold">
-                ahorrar, producir y crecer
+                ahorrar y ganar independencia
               </span>.
             </h1>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              Venta de paneles solares, inversores, baterías e insumos con asesoramiento técnico especializado para hogares, comercios e industrias. Soporte post-venta asegurado para que tu transición energética sea transparente.
+              Venta de equipos solares, kits armados, dimensionamiento e instalación a medida para hogares, comercios, industrias, campos e instaladores. Te ayudamos a reducir costos, evitar dependencia de la red y elegir una solución consciente con el medio ambiente.
             </p>
 
             {/* CTAs */}
@@ -104,15 +104,15 @@ export default function Hero({ onScrollToSection, onOpenCalculator }: HeroProps)
             <div className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
               <div className="text-center lg:text-left">
                 <p className="text-2xl sm:text-3xl font-bold text-white">90%</p>
-                <p className="text-xs text-slate-400 font-semibold mt-0.5">Ahorro Máximo</p>
+                <p className="text-xs text-slate-400 font-semibold mt-0.5">Ahorro Potencial</p>
               </div>
               <div className="text-center lg:text-left">
-                <p className="text-2xl sm:text-3xl font-bold text-white">+500</p>
-                <p className="text-xs text-slate-400 font-semibold mt-0.5">Instalaciones</p>
+                <p className="text-2xl sm:text-3xl font-bold text-white">Morón</p>
+                <p className="text-xs text-slate-400 font-semibold mt-0.5">Base Comercial</p>
               </div>
               <div className="text-center lg:text-left">
-                <p className="text-2xl sm:text-3xl font-bold text-[#F98A1E]">25 Años</p>
-                <p className="text-xs text-slate-400 font-semibold mt-0.5">Garantía Potencia</p>
+                <p className="text-2xl sm:text-3xl font-bold text-[#F98A1E]">País</p>
+                <p className="text-xs text-slate-400 font-semibold mt-0.5">Envíos y Kits</p>
               </div>
             </div>
           </div>

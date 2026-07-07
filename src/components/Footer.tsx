@@ -1,5 +1,6 @@
 import React from 'react';
 import { MapPin, ChevronRight, Facebook, Instagram, Linkedin, MessageSquare } from 'lucide-react';
+import { siteConfig } from '../siteConfig';
 
 interface FooterProps {
   onScrollToSection: (sectionId: string) => void;
@@ -33,7 +34,7 @@ export default function Footer({ onScrollToSection }: FooterProps) {
             </div>
 
             <p className="text-xs text-slate-300 leading-relaxed font-normal max-w-sm">
-              Sistemas de generación fotovoltaica diseñados bajo estrictos estándares de ingeniería para asegurar durabilidad y retornos de inversión sólidos.
+              Equipos, kits y sistemas de generación fotovoltaica para ahorrar energía, ganar independencia y avanzar hacia consumos más sustentables.
             </p>
 
             {/* Social media icons */}
@@ -63,6 +64,7 @@ export default function Footer({ onScrollToSection }: FooterProps) {
             <ul className="space-y-2.5 text-xs">
               {[
                 { label: 'Beneficios principales', id: 'beneficios' },
+                { label: 'Servicios y alcance', id: 'alcance' },
                 { label: 'Soluciones por sector', id: 'soluciones' },
                 { label: 'Catálogo de productos', id: 'productos' },
                 { label: 'Cómo trabajamos', id: 'proceso' },
@@ -115,6 +117,12 @@ export default function Footer({ onScrollToSection }: FooterProps) {
                   <span className="font-bold text-[#F98A1E]">WhatsApp</span>
                 </button>
               </li>
+              <li>
+                <span className="flex items-center text-slate-300">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#F98A1E] mr-1.5" />
+                  <span>{siteConfig.whatsapp.display}</span>
+                </span>
+              </li>
             </ul>
           </div>
 
@@ -127,15 +135,15 @@ export default function Footer({ onScrollToSection }: FooterProps) {
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4.5 h-4.5 text-[#6DA42C] shrink-0 mt-0.5" />
                 <p className="leading-relaxed text-slate-300">
-                  <span className="text-white font-bold block">Despachos Logísticos:</span>
-                  Toda la República Argentina (Envío de kits y accesorios con seguro técnico total).
+                  <span className="text-white font-bold block">Base comercial:</span>
+                  {siteConfig.location.base}. Consultas, entregas y puntos de retiro a coordinar.
                 </p>
               </div>
               <div className="flex items-start space-x-2">
                 <MapPin className="w-4.5 h-4.5 text-[#006CB5] shrink-0 mt-0.5" />
                 <p className="leading-relaxed text-slate-300">
-                  <span className="text-white font-bold block">Obras de Instalación:</span>
-                  Zona Metropolitana, Provincia de Buenos Aires, Córdoba, Santa Fe y Cuyo.
+                  <span className="text-white font-bold block">Cobertura:</span>
+                  {siteConfig.location.coverage}. Instalaciones y puesta en marcha según relevamiento.
                 </p>
               </div>
             </div>
@@ -145,12 +153,7 @@ export default function Footer({ onScrollToSection }: FooterProps) {
 
         {/* Legal & Copyright bottom bar */}
         <div className="mt-16 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono">
-          <p>© {year} LUZ SOLAR SRL. Todos los derechos reservados.</p>
-          <div className="flex items-center space-x-4">
-            <a href="#" className="hover:text-white transition-colors">Términos y Condiciones</a>
-            <span className="text-slate-800">|</span>
-            <a href="#" className="hover:text-white transition-colors">Política de Privacidad</a>
-          </div>
+          <p>Diseñado y desarrollado por IgnacioCode | © {year} LUZ SOLAR SRL. Todos los derechos reservados.</p>
         </div>
 
       </div>
