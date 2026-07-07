@@ -52,27 +52,19 @@ export default function ServiceScope() {
           <div className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
             {scopeItems.map((item) => (
               <div key={item.title} className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
-                <div className="mb-4 inline-flex rounded-xl bg-white p-3 text-[#006CB5] shadow-sm">
-                  <item.icon className="h-5 w-5" />
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="inline-flex rounded-xl bg-white p-3 text-[#006CB5] shadow-sm">
+                    <item.icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#006CB5] m-0">{item.title}</h3>
                 </div>
-                <h3 className="text-base font-bold text-[#006CB5]">{item.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-slate-600">{item.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{item.description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {quickFacts.map((fact) => (
-            <div key={fact.label} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <fact.icon className="mt-0.5 h-5 w-5 shrink-0 text-[#F98A1E]" />
-              <div>
-                <p className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">{fact.label}</p>
-                <p className="mt-1 text-sm font-bold text-[#006CB5]">{fact.value}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        
       </div>
     </section>
   );
