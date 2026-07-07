@@ -1,12 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, ChevronLeft, ChevronRight, Info, MessageSquare, Search, X } from 'lucide-react';
-import { productCategoryLabels, productsData } from '../data';
+import { productCategoryLabels } from '../data';
 import { buildWhatsAppUrl } from '../siteConfig';
+import type { Product } from '../types';
 
 const PRODUCTS_PER_PAGE = 6;
 
-export default function Products() {
+type ProductsProps = {
+  products: Product[];
+};
+
+export default function Products({ products }: ProductsProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,14 +32,14 @@ export default function Products() {
   const categoryCounts = useMemo(() => {
     return categories.reduce<Record<string, number>>((counts, category) => {
       counts[category.value] = category.value === 'all'
-        ? productsData.length
-        : productsData.filter((product) => product.category === category.value).length;
+        ? products.length
+        : products.filter((product) => product.category === category.value).length;
       return counts;
     }, {});
-  }, [categories]);
+  }, [categories, products]);
 
   const filteredProducts = useMemo(() => {
-    return productsData.filter((product) => {
+    return products.filter((product) => {
       const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
       const matchesSearch = !normalizedSearchQuery ||
         product.name.toLowerCase().includes(normalizedSearchQuery) ||
@@ -43,7 +48,7 @@ export default function Products() {
 
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, normalizedSearchQuery]);
+  }, [products, selectedCategory, normalizedSearchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE));
   const pageStartIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;

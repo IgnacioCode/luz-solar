@@ -11,20 +11,23 @@ import {
   ShieldCheck,
   Truck,
 } from 'lucide-react';
-import { getProductBySlug, productCategoryLabels, productsData } from '@/src/data';
+import { productCategoryLabels } from '@/src/data';
+import { getAllProducts, getMergedProductBySlug } from '@/src/lib/products';
 import { buildWhatsAppUrl, siteConfig } from '@/src/siteConfig';
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return productsData.map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const products = await getAllProducts();
+
+  return products.map((product) => ({ slug: product.slug }));
 }
 
 export async function generateMetadata({ params }: ProductDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getMergedProductBySlug(slug);
 
   if (!product) {
     return {
@@ -40,7 +43,7 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getMergedProductBySlug(slug);
 
   if (!product) {
     notFound();

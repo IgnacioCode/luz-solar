@@ -16,8 +16,13 @@ import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import { ArrowUp, MessageSquare } from 'lucide-react';
 import { buildWhatsAppUrl } from './siteConfig';
+import type { Product } from './types';
 
-export default function App() {
+type AppProps = {
+  products: Product[];
+};
+
+export default function App({ products }: AppProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [preFilledInquiry, setPreFilledInquiry] = useState<{
     clientType: 'hogar' | 'comercio' | 'industria' | 'campo';
@@ -89,7 +94,7 @@ export default function App() {
         
 
         {/* Commercial Catalog */}
-        <Products />
+        <Products products={products} />
 
         {/* Visual Methodology Timeline */}
         <Process />
