@@ -9,7 +9,24 @@ const iconMap = {
   ShieldCheck,
 };
 
+const brandLogoUrls = [
+  // Agrega aca las URLs de los logos que quieras mostrar en el carrusel.
+  // Ejemplo:
+  // 'https://tusitio.com/logos/marca-1.png',
+  // 'https://tusitio.com/logos/marca-2.png',
+  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-DEYE-300x300.png',
+  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-ABB-300x300.png',
+  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-HUAWEI-2-300x300.png',
+  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-GOODWE-300x300.png',
+  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-GROWATT-1-300x300.png',
+  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/icono-1-5-300x300.png'
+];
+
 export default function Benefits() {
+  const logoItems = Array.from({ length: Math.max(12, brandLogoUrls.length * 6) }, (_, index) => {
+    return brandLogoUrls[index % brandLogoUrls.length];
+  });
+
   return (
     <section id="beneficios" className="py-24 bg-slate-50 relative overflow-hidden">
       {/* Background decorations */}
@@ -63,6 +80,28 @@ export default function Benefits() {
             );
           })}
         </div>
+
+        {brandLogoUrls.length > 0 && (
+          <div className="">
+            <div className="brand-logo-marquee">
+              <div className="brand-logo-track">
+                {logoItems.map((logoUrl, index) => (
+                  <div
+                    key={`${logoUrl}-${index}`}
+                    className="flex h-60 w-80 shrink-0 items-center justify-center px-6"
+                  >
+                    <img
+                      src={logoUrl}
+                      alt=""
+                      className="max-h-60 max-w-64 object-contain opacity-95 transition duration-300 hover:opacity-100"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -51,6 +51,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
   const whatsappText = `Hola Luz Solar! Vi la ficha del producto *${product.name}* y quiero consultar por ${product.consultationFocus}. ¿Me pueden orientar con precio, disponibilidad y envío?`;
   const whatsappUrl = buildWhatsAppUrl(whatsappText);
+  const hasDetailSections = Boolean(product.detailSections?.length);
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
@@ -134,29 +135,78 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:px-8">
         <div className="space-y-8 lg:col-span-8">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-bold text-[#006CB5]">Características puntuales</h2>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              {product.specifications.map((specification) => (
-                <div key={specification} className="flex items-start gap-3 text-sm text-slate-600">
-                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#6DA42C]" />
-                  <span>{specification}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {hasDetailSections ? (
+            product.detailSections?.map((section, sectionIndex) => (
+              <div key={section.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#006CB5]/10 text-xs font-bold text-[#006CB5]">
+                    {sectionIndex + 1}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="text-xl font-bold text-[#006CB5]">{section.title}</h2>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-bold text-[#006CB5]">Cómo se aplica en un proyecto</h2>
-            <div className="mt-5 space-y-4">
-              {product.detailPoints.map((point) => (
-                <div key={point} className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
-                  <Ruler className="mt-0.5 h-5 w-5 shrink-0 text-[#F98A1E]" />
-                  <span>{point}</span>
+                    {section.body?.length ? (
+                      <div className="mt-4 space-y-3">
+                        {section.body.map((paragraph) => (
+                          <p key={paragraph} className="text-sm leading-relaxed text-slate-600">
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {section.items?.length ? (
+                      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                        {section.items.map((item) => (
+                          <div key={item} className="flex items-start gap-3 text-sm text-slate-600">
+                            <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#6DA42C]" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+
+                    {section.subsections?.length ? (
+                      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                        {section.subsections.map((subsection) => (
+                          <div key={subsection.title} className="border-l-2 border-[#F98A1E]/45 pl-4">
+                            <h3 className="text-sm font-bold text-slate-900">{subsection.title}</h3>
+                            <p className="mt-1 text-sm leading-relaxed text-slate-600">{subsection.body}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-[#006CB5]">Características puntuales</h2>
+                <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                  {product.specifications.map((specification) => (
+                    <div key={specification} className="flex items-start gap-3 text-sm text-slate-600">
+                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#6DA42C]" />
+                      <span>{specification}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-[#006CB5]">Cómo se aplica en un proyecto</h2>
+                <div className="mt-5 space-y-4">
+                  {product.detailPoints.map((point) => (
+                    <div key={point} className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
+                      <Ruler className="mt-0.5 h-5 w-5 shrink-0 text-[#F98A1E]" />
+                      <span>{point}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <aside className="space-y-5 lg:col-span-4">

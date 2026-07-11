@@ -153,7 +153,18 @@ export default function Footer({ onScrollToSection }: FooterProps) {
 
         {/* Legal & Copyright bottom bar */}
         <div className="mt-16 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono">
-          <p>Diseñado y desarrollado por IgnacioCode | © {year} LUZ SOLAR SRL. Todos los derechos reservados.</p>
+          <p>
+            Diseñado y desarrollado por{' '}
+            <a
+              href="https://ignacio-code-portfolio.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white transition hover:text-[#6DA42C] hover:underline hover:underline-offset-4"
+            >
+              IgnacioCode
+            </a>
+            {' '}| © {year} LUZ SOLAR SRL. Todos los derechos reservados.
+          </p>
         </div>
 
       </div>

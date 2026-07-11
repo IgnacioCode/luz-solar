@@ -2,7 +2,7 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
-  category: 'panels' | 'inverters' | 'batteries' | 'controllers' | 'structures' | 'electrical';
+  category: 'kits' | 'solar' | 'storage' | 'electrical' | 'water' | 'mobility';
   description: string;
   specifications: string[];
   idealFor: string[];
@@ -11,6 +11,17 @@ export interface Product {
   consultationFocus: string;
   image: string;
   badge?: string;
+  detailSections?: ProductDetailSection[];
+}
+
+export interface ProductDetailSection {
+  title: string;
+  body?: string[];
+  items?: string[];
+  subsections?: {
+    title: string;
+    body: string;
+  }[];
 }
 
 export interface Solution {

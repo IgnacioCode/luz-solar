@@ -20,12 +20,12 @@ export default function Process() {
         </div>
 
         {/* Desktop timeline line */}
-        <div className="relative mt-12">
+        <div className="relative mx-auto mt-12 max-w-6xl">
           {/* Horizontal line for desktop */}
           <div className="absolute top-[2.25rem] left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-[#006CB5]/20 via-[#6DA42C]/40 to-[#F98A1E]/20 hidden lg:block z-0" />
 
           {/* Timeline steps grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 relative z-10">
             {processStepsData.map((step, idx) => {
               // Color accents depending on step to create visual rhythm
               const accentColorClass = 
@@ -46,7 +46,7 @@ export default function Process() {
                 <div
                   key={step.stepNumber}
                   id={`process-step-${step.stepNumber}`}
-                  className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 group"
+                  className="flex flex-col items-center text-center space-y-4 group"
                 >
                   {/* Step bubble */}
                   <div className={`relative flex items-center justify-center w-14 h-14 rounded-2xl bg-white border-2 ${accentColorClass} shadow-md group-hover:scale-110 transition-transform duration-300 z-10`}>
@@ -65,7 +65,7 @@ export default function Process() {
                     <h3 className="text-base font-bold text-[#006CB5] group-hover:text-[#006CB5] transition-colors">
                       {step.title}
                     </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed font-normal max-w-xs mx-auto lg:mx-0">
+                    <p className="text-xs text-slate-500 leading-relaxed font-normal max-w-xs mx-auto">
                       {step.description}
                     </p>
                   </div>

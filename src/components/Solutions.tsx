@@ -20,7 +20,7 @@ export default function Solutions({ onScrollToSection }: SolutionsProps) {
   const IconComponent = iconMap[activeSolution.iconName as keyof typeof iconMap];
 
   return (
-    <section id="soluciones" className="py-24 bg-slate-100 relative overflow-hidden">
+    <section id="soluciones" className="hidden py-24 bg-slate-100 relative overflow-hidden md:block">
       {/* Background elements */}
       <div className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-[#006CB5]/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-0 w-[400px] h-[400px] bg-[#6DA42C]/5 rounded-full blur-[100px] pointer-events-none" />

@@ -1,14 +1,36 @@
 import { productsData } from '@/src/data';
 import type { Product } from '@/src/types';
 
-const VALID_CATEGORIES = new Set<Product['category']>([
-  'panels',
-  'inverters',
-  'batteries',
-  'controllers',
-  'structures',
-  'electrical',
-]);
+const CATEGORY_ALIASES: Record<string, Product['category']> = {
+  kits: 'kits',
+  panels: 'solar',
+  paneles: 'solar',
+  solar: 'solar',
+  inverters: 'solar',
+  inversores: 'solar',
+  structures: 'solar',
+  estructuras: 'solar',
+  batteries: 'storage',
+  baterias: 'storage',
+  storage: 'storage',
+  almacenamiento: 'storage',
+  controllers: 'electrical',
+  reguladores: 'electrical',
+  electrical: 'electrical',
+  electrica: 'electrical',
+  lighting: 'electrical',
+  seguridad: 'electrical',
+  water: 'water',
+  agua: 'water',
+  pool: 'water',
+  piscina: 'water',
+  pumping: 'water',
+  bombeo: 'water',
+  thermal: 'water',
+  termica: 'water',
+  mobility: 'mobility',
+  movilidad: 'mobility',
+};
 
 const DEFAULT_REVALIDATE_SECONDS = 300;
 
@@ -99,11 +121,12 @@ function splitList(value: string) {
 function toProduct(row: CsvRow, index: number): Product | null {
   const name = getValue(row, ['name', 'nombre', 'producto']);
   const slug = getValue(row, ['slug', 'url', 'handle']);
-  const category = getValue(row, ['category', 'categoria', 'tipo']) as Product['category'];
+  const rawCategory = getValue(row, ['category', 'categoria', 'tipo']);
+  const category = CATEGORY_ALIASES[normalizeHeader(rawCategory)];
   const description = getValue(row, ['description', 'descripcion', 'descripción']);
   const image = getValue(row, ['image', 'imagen', 'foto', 'imageUrl', 'image_url']);
 
-  if (!name || !slug || !category || !VALID_CATEGORIES.has(category) || !description || !image) {
+  if (!name || !slug || !category || !description || !image) {
     return null;
   }
 

@@ -1,1 +1,30 @@
 @import "tailwindcss";
+
+@keyframes brand-logo-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.brand-logo-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.brand-logo-track {
+  display: flex;
+  width: max-content;
+  gap: 2rem;
+  padding-inline: 1rem;
+  animation: brand-logo-marquee 55s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo-track {
+    animation: none;
+  }
+}
