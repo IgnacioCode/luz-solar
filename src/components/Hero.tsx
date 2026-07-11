@@ -34,8 +34,6 @@ export default function Hero({ onScrollToSection, onOpenCalculator }: HeroProps)
     return () => window.clearInterval(interval);
   }, []);
 
-  const activeImage = heroImages[activeImageIndex];
-
   return (
     <section
       id="hero"
@@ -68,7 +66,7 @@ export default function Hero({ onScrollToSection, onOpenCalculator }: HeroProps)
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column: Text & CTAs */}
-          <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
+          <div className="lg:col-span-6 space-y-8 text-center lg:text-left">
 
             {/* Title */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
@@ -118,21 +116,27 @@ export default function Hero({ onScrollToSection, onOpenCalculator }: HeroProps)
           </div>
 
           {/* Right Column: Interactive Solar Visualization Frame */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
+          <div className="lg:col-span-6 relative">
+            <div className="relative mx-auto max-w-md lg:max-w-2xl">
               {/* Outer Glow */}
               <div className="absolute inset-0 bg-gradient-to-tr from-[#006CB5]/20 to-[#6DA42C]/20 rounded-3xl blur-2xl z-0" />
               
               {/* Beautiful Solar Panel Panel Frame */}
               <div className="relative z-10 p-2.5 rounded-3xl bg-white/5 border border-white/10 shadow-2xl overflow-hidden group">
-                <div className="relative aspect-video sm:aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden bg-slate-950">
-                  <img
-                    key={activeImage.src}
-                    src={activeImage.src}
-                    alt={activeImage.alt}
-                    className="w-full h-full object-cover object-center animate-in fade-in duration-500 group-hover:scale-105 transition-transform ease-out brightness-95"
-                    referrerPolicy="no-referrer"
-                  />
+                <div className="relative aspect-video sm:aspect-square lg:aspect-[16/11] rounded-2xl overflow-hidden bg-slate-950">
+                  {heroImages.map((image, index) => (
+                    <img
+                      key={image.src}
+                      src={image.src}
+                      alt={image.alt}
+                      className={`absolute inset-0 h-full w-full object-cover object-center brightness-95 transition-all duration-1000 ease-in-out ${
+                        index === activeImageIndex
+                          ? 'scale-100 opacity-100'
+                          : 'scale-105 opacity-0'
+                      } group-hover:scale-105`}
+                      referrerPolicy="no-referrer"
+                    />
+                  ))}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-slate-950/35 px-3 py-1.5 backdrop-blur-md border border-white/10">
                     {heroImages.map((image, index) => (
                       <button
