@@ -1,35 +1,45 @@
-import { productsData } from '@/src/data';
-import type { Product } from '@/src/types';
+import { catalogProductsData } from '@/src/data';
+import type { CatalogProduct, Product } from '@/src/types';
 
 const CATEGORY_ALIASES: Record<string, Product['category']> = {
   kits: 'kits',
+  kitssolares: 'kits',
   panels: 'solar',
   paneles: 'solar',
+  panelessolares: 'solar',
   solar: 'solar',
   inverters: 'solar',
   inversores: 'solar',
+  inversoressolares: 'solar',
   structures: 'solar',
   estructuras: 'solar',
+  estructurassolares: 'solar',
   batteries: 'storage',
   baterias: 'storage',
   storage: 'storage',
   almacenamiento: 'storage',
   controllers: 'electrical',
   reguladores: 'electrical',
+  reguladoresdecarga: 'electrical',
   electrical: 'electrical',
   electrica: 'electrical',
+  electricidadyseguridad: 'electrical',
   lighting: 'electrical',
   seguridad: 'electrical',
+  iluminacionyseguridad: 'electrical',
   water: 'water',
   agua: 'water',
+  aguayclimatizacion: 'water',
   pool: 'water',
   piscina: 'water',
   pumping: 'water',
   bombeo: 'water',
+  bombeosolar: 'water',
   thermal: 'water',
   termica: 'water',
   mobility: 'mobility',
   movilidad: 'mobility',
+  movilidadelectrica: 'mobility',
 };
 
 const DEFAULT_REVALIDATE_SECONDS = 300;
@@ -118,15 +128,38 @@ function splitList(value: string) {
     .filter(Boolean);
 }
 
-function toProduct(row: CsvRow, index: number): Product | null {
+function parsePrice(value: string) {
+  const cleaned = value.replace(/[^0-9,.-]/g, '');
+
+  if (!cleaned) {
+    return null;
+  }
+
+  const normalized = cleaned.includes(',') && cleaned.includes('.')
+    ? cleaned.replace(/\./g, '').replace(',', '.')
+    : cleaned.includes(',')
+      ? cleaned.replace(',', '.')
+      : cleaned.split('.').length > 2
+        ? cleaned.replace(/\./g, '')
+        : cleaned.includes('.') && cleaned.split('.').at(-1)?.length === 3
+          ? cleaned.replace('.', '')
+          : cleaned;
+  const price = Number(normalized);
+
+  return Number.isFinite(price) && price > 0 ? price : null;
+}
+
+function toProduct(row: CsvRow, index: number): CatalogProduct | null {
   const name = getValue(row, ['name', 'nombre', 'producto']);
   const slug = getValue(row, ['slug', 'url', 'handle']);
   const rawCategory = getValue(row, ['category', 'categoria', 'tipo']);
   const category = CATEGORY_ALIASES[normalizeHeader(rawCategory)];
   const description = getValue(row, ['description', 'descripcion', 'descripción']);
-  const image = getValue(row, ['image', 'imagen', 'foto', 'imageUrl', 'image_url']);
+  const imageValue = getValue(row, ['image', 'imagen', 'foto', 'imageUrl', 'image_url']);
+  const images = splitList(imageValue);
+  const price = parsePrice(getValue(row, ['price', 'precio', 'precioars', 'precio_ars']));
 
-  if (!name || !slug || !category || !description || !image) {
+  if (!name || !slug || !category || !description || !images.length || price === null) {
     return null;
   }
 
@@ -145,14 +178,18 @@ function toProduct(row: CsvRow, index: number): Product | null {
     detailIntro: getValue(row, ['detailIntro', 'intro_detalle', 'intro detalle']) || description,
     detailPoints: detailPoints.length ? detailPoints : [description],
     consultationFocus: getValue(row, ['consultationFocus', 'foco_consulta', 'foco consulta']) || 'precio, disponibilidad y dimensionamiento',
-    image,
+    image: images[0],
+    images,
     badge: getValue(row, ['badge', 'etiqueta', 'destacado']) || undefined,
+    price,
+    currency: getValue(row, ['currency', 'moneda']).toUpperCase() === 'ARS' ? 'ARS' : 'USD',
+    priceNote: getValue(row, ['priceNote', 'nota_precio', 'nota precio']) || undefined,
+    availability: getValue(row, ['availability', 'disponibilidad', 'stock']) || undefined,
   };
 }
 
 async function getCsvProducts() {
-  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQXAEsFzguxflLqYCVQabYh9xaYYBnK9ezWAxa-ryT3gdItgqhpBV_ndjfTz3wuwL8zvgepOIzyjI68/pub?output=csv';
-  console.log("ENTREE", csvUrl);
+  const csvUrl = process.env.PRODUCTS_CSV_URL ?? process.env.NEXT_PUBLIC_PRODUCTS_CSV_URL;
 
   if (!csvUrl) {
     return [];
@@ -172,17 +209,17 @@ async function getCsvProducts() {
 
     return parseCsv(csv)
       .map(toProduct)
-      .filter((product): product is Product => Boolean(product));
+      .filter((product): product is CatalogProduct => Boolean(product));
   } catch {
     return [];
   }
 }
 
-export async function getAllProducts() {
+export async function getAllCatalogProducts() {
   const csvProducts = await getCsvProducts();
-  const productsBySlug = new Map<string, Product>();
+  const productsBySlug = new Map<string, CatalogProduct>();
 
-  productsData.forEach((product) => {
+  catalogProductsData.forEach((product) => {
     productsBySlug.set(product.slug, product);
   });
 
@@ -194,6 +231,6 @@ export async function getAllProducts() {
 }
 
 export async function getMergedProductBySlug(slug: string) {
-  const products = await getAllProducts();
+  const products = await getAllCatalogProducts();
   return products.find((product) => product.slug === slug);
 }

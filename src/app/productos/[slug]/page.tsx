@@ -3,25 +3,31 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
   ArrowLeft,
-  CheckCircle,
+  CheckCircle2,
+  CreditCard,
   MessageSquare,
   PackageCheck,
-  Ruler,
-  Send,
   ShieldCheck,
+  ShoppingBag,
   Truck,
 } from 'lucide-react';
 import { productCategoryLabels } from '@/src/data';
-import { getAllProducts, getMergedProductBySlug } from '@/src/lib/products';
+import { getAllCatalogProducts, getMergedProductBySlug } from '@/src/lib/products';
 import { buildWhatsAppUrl, siteConfig } from '@/src/siteConfig';
+import BrandLogo from '@/src/components/BrandLogo';
+import ProductGallery from '@/src/components/ProductGallery';
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateStaticParams() {
-  const products = await getAllProducts();
+function formatPrice(price: number, currency: 'ARS' | 'USD' = 'USD') {
+  const amount = new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 }).format(price);
+  return `${currency === 'USD' ? 'U$S' : '$'} ${amount}`;
+}
 
+export async function generateStaticParams() {
+  const products = await getAllCatalogProducts();
   return products.map((product) => ({ slug: product.slug }));
 }
 
@@ -29,16 +35,9 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
   const { slug } = await params;
   const product = await getMergedProductBySlug(slug);
 
-  if (!product) {
-    return {
-      title: 'Producto no encontrado | Luz Solar SRL',
-    };
-  }
-
-  return {
-    title: `${product.name} | Luz Solar SRL`,
-    description: product.description,
-  };
+  return product
+    ? { title: `${product.name} | Catálogo | Luz Solar SRL`, description: product.description }
+    : { title: 'Producto no encontrado | Luz Solar SRL' };
 }
 
 export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
@@ -49,212 +48,91 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     notFound();
   }
 
-  const whatsappText = `Hola Luz Solar! Vi la ficha del producto *${product.name}* y quiero consultar por ${product.consultationFocus}. ¿Me pueden orientar con precio, disponibilidad y envío?`;
-  const whatsappUrl = buildWhatsAppUrl(whatsappText);
-  const hasDetailSections = Boolean(product.detailSections?.length);
+  const price = formatPrice(product.price, product.currency ?? 'USD');
+  const whatsappUrl = buildWhatsAppUrl(
+    `Hola Luz Solar! Quiero comprar o consultar por *${product.name}* (${price}). ¿Me confirman ${product.availability?.toLowerCase() ?? 'stock'}, envío y formas de pago?`,
+  );
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="relative overflow-hidden bg-[#003E6B] text-white">
-        <div className="absolute inset-0 opacity-20">
-          <img
-            src={product.image}
-            alt=""
-            className="h-full w-full object-cover"
-            referrerPolicy="no-referrer"
-          />
+      <header className="border-b border-slate-200 bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+          <Link href="/#catalogo" className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 transition hover:text-[#006CB5]">
+            <ArrowLeft className="h-4 w-4" />
+            Volver al catálogo
+          </Link>
+          <BrandLogo />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#003E6B] via-[#003E6B]/95 to-[#006CB5]/75" />
+      </header>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="mb-12 flex items-center justify-between gap-4">
-            <Link
-              href="/#productos"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-white transition hover:bg-white/15"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Volver al catálogo
-            </Link>
-            <Link href="/" className="flex items-center gap-2" aria-label="Ir al inicio">
-              <span className="text-lg font-bold tracking-tight">LUZ <span className="text-[#F98A1E]">SOLAR</span></span>
-              <span className="text-[10px] font-mono font-bold text-[#6DA42C]">SRL</span>
-            </Link>
+      <section className="pb-10">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Inicio / Catálogo / {productCategoryLabels[product.category]}</p>
+        <div className="mt-5 grid gap-8 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-7">
+            <ProductGallery images={product.images?.length ? product.images : [product.image]} name={product.name} badge={product.badge} />
+            <div className="mt-4 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-500">Imagen ilustrativa. Consultá por marca, modelo y disponibilidad vigente.</div>
           </div>
 
-          <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
-            <div className="space-y-6 lg:col-span-7">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-[#F98A1E] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                  {productCategoryLabels[product.category]}
-                </span>
-                <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white/85">
-                  Precio y stock a consultar
-                </span>
-              </div>
-              <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">
-                {product.name}
-              </h1>
-              <p className="max-w-2xl text-base leading-relaxed text-slate-200">
-                {product.detailIntro}
-              </p>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[#F98A1E] px-6 py-3 text-sm font-bold text-white shadow-xl shadow-[#F98A1E]/20 transition hover:bg-[#E47412]"
-                >
-                  <MessageSquare className="h-4 w-4" />
-                  Consultar por WhatsApp
-                </a>
-                <Link
-                  href="/#contacto"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10"
-                >
-                  <Send className="h-4 w-4" />
-                  Pedir dimensionamiento
-                </Link>
-              </div>
-            </div>
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-6">
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#6DA42C]">{productCategoryLabels[product.category]}</span>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{product.name}</h1>
+              <p className="mt-4 text-sm leading-relaxed text-slate-600">{product.description}</p>
 
-            <div className="lg:col-span-5">
-              <div className="overflow-hidden rounded-3xl border border-white/15 bg-white/10 p-2 shadow-2xl">
-                <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-slate-950">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="h-full w-full object-cover"
-                    referrerPolicy="no-referrer"
-                  />
+              <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">Precio de referencia</p>
+                <p className="mt-1 text-4xl font-extrabold tracking-tight text-[#006CB5]">{price}</p>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">{product.priceNote ?? 'Precio sujeto a disponibilidad y configuración del producto.'}</p>
+                <div className="mt-4 flex items-center gap-2 rounded-lg bg-[#6DA42C]/10 px-3 py-2 text-xs font-bold text-[#47771c]"><CheckCircle2 className="h-4 w-4" />{product.availability ?? 'Consultar disponibilidad'}</div>
+                <a href={whatsappUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#F98A1E] px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F98A1E]/20 transition hover:bg-[#E47412]">
+                  <MessageSquare className="h-5 w-5" />
+                  Consultar compra por WhatsApp
+                </a>
+                <p className="mt-3 text-center text-[11px] text-slate-400">Te confirmamos stock, entrega y medios de pago antes de concretar la compra.</p>
+              </div>
+              <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="text-sm font-bold text-[#006CB5]">Especificaciones principales</h2>
+                <div className="mt-4 space-y-3">
+                  {product.specifications.map((specification) => <div key={specification} className="flex items-start gap-2 text-xs leading-relaxed text-slate-600"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#6DA42C]" />{specification}</div>)}
                 </div>
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:px-8">
-        <div className="space-y-8 lg:col-span-8">
-          {hasDetailSections ? (
-            product.detailSections?.map((section, sectionIndex) => (
-              <div key={section.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#006CB5]/10 text-xs font-bold text-[#006CB5]">
-                    {sectionIndex + 1}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <h2 className="text-xl font-bold text-[#006CB5]">{section.title}</h2>
+      <section className="border-t border-slate-200 bg-white">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="space-y-8 lg:col-span-8">
+            <article>
+              <h2 className="text-2xl font-bold text-[#006CB5]">Sobre este producto</h2>
+              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-slate-600">{product.detailIntro}</p>
+            </article>
+            <article className="border-t border-slate-200 pt-8">
+              <h2 className="text-2xl font-bold text-[#006CB5]">Antes de comprar</h2>
+              <div className="mt-5 space-y-3">{product.detailPoints.map((point) => <p key={point} className="border-l-2 border-[#F98A1E]/50 pl-4 text-sm leading-relaxed text-slate-600">{point}</p>)}</div>
+            </article>
+          </div>
 
-                    {section.body?.length ? (
-                      <div className="mt-4 space-y-3">
-                        {section.body.map((paragraph) => (
-                          <p key={paragraph} className="text-sm leading-relaxed text-slate-600">
-                            {paragraph}
-                          </p>
-                        ))}
-                      </div>
-                    ) : null}
-
-                    {section.items?.length ? (
-                      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                        {section.items.map((item) => (
-                          <div key={item} className="flex items-start gap-3 text-sm text-slate-600">
-                            <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#6DA42C]" />
-                            <span>{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    ) : null}
-
-                    {section.subsections?.length ? (
-                      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                        {section.subsections.map((subsection) => (
-                          <div key={subsection.title} className="border-l-2 border-[#F98A1E]/45 pl-4">
-                            <h3 className="text-sm font-bold text-slate-900">{subsection.title}</h3>
-                            <p className="mt-1 text-sm leading-relaxed text-slate-600">{subsection.body}</p>
-                          </div>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
+          <aside className="space-y-4 lg:col-span-4">
+            <div className="rounded-2xl border border-slate-200 p-5">
+              <h2 className="font-bold text-[#006CB5]">Ideal para</h2>
+              <div className="mt-4 flex flex-wrap gap-2">{product.idealFor.map((item) => <span key={item} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">{item}</span>)}</div>
+            </div>
+            <div className="rounded-2xl border border-slate-200 p-5">
+              <h2 className="font-bold text-[#006CB5]">Compra acompañada</h2>
+              <div className="mt-4 space-y-4 text-sm text-slate-600">
+                <div className="flex gap-3"><PackageCheck className="h-5 w-5 shrink-0 text-[#6DA42C]" />Confirmación de stock y modelo antes de la compra.</div>
+                <div className="flex gap-3"><Truck className="h-5 w-5 shrink-0 text-[#006CB5]" />{siteConfig.location.coverage}.</div>
+                <div className="flex gap-3"><CreditCard className="h-5 w-5 shrink-0 text-[#F98A1E]" />Medios de pago y factura a confirmar por WhatsApp.</div>
+                <div className="flex gap-3"><ShieldCheck className="h-5 w-5 shrink-0 text-[#006CB5]" />Asesoramiento para verificar compatibilidad técnica.</div>
               </div>
-            ))
-          ) : (
-            <>
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-[#006CB5]">Características puntuales</h2>
-                <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                  {product.specifications.map((specification) => (
-                    <div key={specification} className="flex items-start gap-3 text-sm text-slate-600">
-                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#6DA42C]" />
-                      <span>{specification}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-[#006CB5]">Cómo se aplica en un proyecto</h2>
-                <div className="mt-5 space-y-4">
-                  {product.detailPoints.map((point) => (
-                    <div key={point} className="flex items-start gap-3 text-sm leading-relaxed text-slate-600">
-                      <Ruler className="mt-0.5 h-5 w-5 shrink-0 text-[#F98A1E]" />
-                      <span>{point}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
+            </div>
+            <Link href="/#conceptos" className="flex items-center justify-center gap-2 rounded-2xl bg-slate-100 px-5 py-4 text-sm font-bold text-[#006CB5] transition hover:bg-slate-200"><ShoppingBag className="h-4 w-4" />Ver guía de soluciones solares</Link>
+          </aside>
         </div>
-
-        <aside className="space-y-5 lg:col-span-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-base font-bold text-[#006CB5]">Ideal para</h2>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {product.idealFor.map((item) => (
-                <span key={item} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-base font-bold text-[#006CB5]">Venta y entrega</h2>
-            <div className="mt-4 space-y-4 text-sm text-slate-600">
-              <div className="flex items-start gap-3">
-                <PackageCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#6DA42C]" />
-                <span>Producto suelto, kit armado o instalación a medida según el caso.</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <Truck className="mt-0.5 h-5 w-5 shrink-0 text-[#006CB5]" />
-                <span>{siteConfig.location.coverage}. Base comercial en {siteConfig.location.base}.</span>
-              </div>
-              <div className="flex items-start gap-3">
-                <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#F98A1E]" />
-                <span>{siteConfig.location.pickup}.</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-[#6DA42C]/25 bg-[#6DA42C]/10 p-6">
-            <h2 className="text-base font-bold text-[#006CB5]">Consulta rápida</h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">
-              El precio final puede variar por marca, stock, cantidad, envío y dimensionamiento del sistema.
-            </p>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#6DA42C] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#5F9326]"
-            >
-              <MessageSquare className="h-4 w-4" />
-              Escribir al {siteConfig.whatsapp.display}
-            </a>
-          </div>
-        </aside>
       </section>
     </main>
   );

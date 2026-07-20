@@ -1,8 +1,8 @@
 import App from '@/src/App';
-import { getAllProducts } from '@/src/lib/products';
+import { getAllCatalogProducts } from '@/src/lib/products';
 
 export default async function Home() {
-  const products = await getAllProducts();
+  const products = await getAllCatalogProducts();
 
   return <App products={products} />;
 }

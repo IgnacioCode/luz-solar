@@ -15,11 +15,11 @@ const brandLogoUrls = [
   // 'https://tusitio.com/logos/marca-1.png',
   // 'https://tusitio.com/logos/marca-2.png',
   'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-DEYE-300x300.png',
-  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-ABB-300x300.png',
+  //'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-ABB-300x300.png',
   'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-HUAWEI-2-300x300.png',
   'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-GOODWE-300x300.png',
   'https://www.manuelacanteros.com/wp-content/uploads/2026/07/LOGO-GROWATT-1-300x300.png',
-  'https://www.manuelacanteros.com/wp-content/uploads/2026/07/icono-1-5-300x300.png'
+  //'https://www.manuelacanteros.com/wp-content/uploads/2026/07/icono-1-5-300x300.png'
 ];
 
 export default function Benefits() {

@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import Benefits from './components/Benefits';
 import ServiceScope from './components/ServiceScope';
 import Products from './components/Products';
+import SolarGuide from './components/SolarGuide';
 import Solutions from './components/Solutions';
 import Process from './components/Process';
 import PostSales from './components/PostSales';
@@ -16,10 +17,11 @@ import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
 import { ArrowUp, MessageSquare } from 'lucide-react';
 import { buildWhatsAppUrl } from './siteConfig';
-import type { Product } from './types';
+import { solarTopicsData } from './data';
+import type { CatalogProduct } from './types';
 
 type AppProps = {
-  products: Product[];
+  products: CatalogProduct[];
 };
 
 export default function App({ products }: AppProps) {
@@ -92,6 +94,8 @@ export default function App({ products }: AppProps) {
 
         {/* Sizing & Savings Calculator <SolarCalculator onPreFillInquiry={handlePreFillInquiry} />*/}
         
+
+        <SolarGuide topics={solarTopicsData} onExploreCatalog={() => handleScrollToSection('catalogo')} />
 
         {/* Commercial Catalog */}
         <Products products={products} />

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 
 interface NavbarProps {
   onScrollToSection: (sectionId: string) => void;
@@ -25,7 +26,8 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
     { label: 'Beneficios', id: 'beneficios' },
     { label: 'Servicios', id: 'alcance' },
     { label: 'Soluciones', id: 'soluciones' },
-    { label: 'Productos', id: 'productos' },
+    { label: 'Guía solar', id: 'conceptos' },
+    { label: 'Catálogo', id: 'catalogo' },
     { label: 'Cómo trabajamos', id: 'proceso' },
     { label: 'Preguntas', id: 'preguntas' },
     { label: 'Contacto', id: 'contacto' },
@@ -56,28 +58,7 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
     >
       <div className="max-w-[92rem] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
         <div className="flex items-center justify-between gap-6 xl:gap-10">
-          {/* Logo */}
-          <div
-            id="navbar-logo"
-            className="flex shrink-0 items-center space-x-2.5 cursor-pointer group"
-            onClick={() => handleLinkClick('hero')}
-          >
-            <div className="flex h-12 w-16 shrink-0 items-center justify-center rounded-xl bg-white/95 p-1.5 shadow-md ring-1 ring-white/20 transition-transform duration-300 group-hover:scale-105">
-              <img
-                src="/logoLuzSolarSolo.png"
-                alt="Logo Luz Solar"
-                className="h-full w-full object-contain"
-              />
-            </div>
-            <div className="flex flex-col items-center">
-              <span className={`text-xl font-bold tracking-tight ${logoTextClass} leading-none transition-colors`}>
-                LUZ <span className="text-[#F98A1E]">SOLAR</span>
-              </span>
-              <span className={`text-[10px] tracking-[0.28em] ${logoSubTextClass} font-mono font-bold uppercase leading-tight text-center transition-colors`}>
-                SRL
-              </span>
-            </div>
-          </div>
+          <BrandLogo id="navbar-logo" onClick={() => handleLinkClick('hero')} textClassName={logoTextClass} subTextClassName={logoSubTextClass} />
 
           {/* Desktop Menu */}
           <div id="desktop-menu" className="hidden lg:flex flex-1 min-w-0 items-center justify-center gap-6 xl:gap-9 2xl:gap-11">

@@ -10,8 +10,20 @@ export interface Product {
   detailPoints: string[];
   consultationFocus: string;
   image: string;
+  images?: string[];
   badge?: string;
   detailSections?: ProductDetailSection[];
+}
+
+/**
+ * A sellable item. The educational guide intentionally uses `Product` without
+ * a price; only this type is allowed into the commercial catalogue.
+ */
+export interface CatalogProduct extends Product {
+  price: number;
+  currency?: 'ARS' | 'USD';
+  priceNote?: string;
+  availability?: string;
 }
 
 export interface ProductDetailSection {
