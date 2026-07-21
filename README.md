@@ -48,8 +48,10 @@ No subas `.env` al repositorio. Usá `.env.example` como plantilla local. La con
 Para el pipeline de **Workers Builds**, configurá:
 
 ```text
-Build command:  npm run cf:build
-Deploy command: npx wrangler deploy
+Build command:  (vacío)
+Deploy command: npm run cf:deploy
 ```
+
+`cf:deploy` ejecuta `npm run cf:build` y recién después `npx wrangler deploy`. No uses la combinación `npm run build` + `npx wrangler deploy`: el primero sólo genera `.next`, mientras que el adaptador requiere `.open-next` al momento de publicar.
 
 Esto hace que los valores `NEXT_PUBLIC_*` estén presentes cuando se compila Next.js y también cuando el Worker atiende tráfico de producción.
