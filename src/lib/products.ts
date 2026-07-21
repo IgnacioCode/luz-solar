@@ -1,4 +1,3 @@
-import { catalogProductsData } from '@/src/data';
 import type { CatalogProduct, Product } from '@/src/types';
 
 const CATEGORY_ALIASES: Record<string, Product['category']> = {
@@ -216,18 +215,7 @@ async function getCsvProducts() {
 }
 
 export async function getAllCatalogProducts() {
-  const csvProducts = await getCsvProducts();
-  const productsBySlug = new Map<string, CatalogProduct>();
-
-  catalogProductsData.forEach((product) => {
-    productsBySlug.set(product.slug, product);
-  });
-
-  csvProducts.forEach((product) => {
-    productsBySlug.set(product.slug, product);
-  });
-
-  return Array.from(productsBySlug.values());
+  return getCsvProducts();
 }
 
 export async function getMergedProductBySlug(slug: string) {

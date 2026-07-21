@@ -200,7 +200,16 @@ export default function Products({ products, onAddToCart }: ProductsProps) {
           </div>
         </div>
 
-        {filteredProducts.length > 0 ? (
+        {products.length === 0 ? (
+          <div className="mx-auto max-w-lg rounded-3xl border border-dashed border-amber-300 bg-amber-50 px-6 py-16 text-center">
+            <p className="text-base font-bold text-amber-950">
+              No se pudieron cargar los productos.
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-amber-900/80">
+              Revisá que el catálogo de Excel esté publicado y contenga productos válidos para volver a intentarlo.
+            </p>
+          </div>
+        ) : filteredProducts.length > 0 ? (
           <>
             <div className="flex flex-col">
               <div className="order-1 mb-5 flex items-center justify-between gap-3 text-xs text-slate-500">

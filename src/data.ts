@@ -1,4 +1,4 @@
-import { Benefit, Product, CatalogProduct, Solution, ProcessStep, PostSalesService, CommercialArgument, FaqItem } from './types';
+import { Benefit, Product, Solution, ProcessStep, PostSalesService, CommercialArgument, FaqItem } from './types';
 
 export const benefitsData: Benefit[] = [
   {
@@ -2272,65 +2272,6 @@ export const productCategoryLabels: Record<Product['category'] | 'all', string> 
 export function getSolarTopicBySlug(slug: string) {
   return solarTopicsData.find((product) => product.slug === slug);
 }
-
-// Local commercial catalogue. A published Google Sheet can add products or
-// override one of these records by using the same slug.
-export const catalogProductsData: CatalogProduct[] = [
-  {
-    id: 'cat-panel-550w',
-    slug: 'panel-solar-monocristalino-550w',
-    name: 'Panel solar monocristalino 550 W',
-    category: 'solar',
-    description: 'Módulo fotovoltaico de alta potencia para sistemas residenciales, comerciales y ampliaciones de instalaciones existentes.',
-    specifications: ['Potencia nominal: 550 W', 'Tecnología monocristalina', 'Marco de aluminio y vidrio templado', 'Compatible con estructuras para techo o suelo'],
-    idealFor: ['Sistemas on-grid', 'Sistemas híbridos', 'Instalaciones comerciales'],
-    detailIntro: 'Panel solar de 550 W pensado para generar energía limpia en instalaciones de distinta escala. La cantidad de módulos se define según consumo, espacio disponible y configuración del inversor.',
-    detailPoints: ['Se puede incorporar a un sistema nuevo o a una ampliación técnicamente compatible.', 'La potencia final del sistema se calcula combinando paneles, inversor, protecciones y estructura de montaje.', 'Consultá por disponibilidad de marca, ficha técnica y compatibilidad antes de comprar.'],
-    consultationFocus: 'stock, ficha técnica, cantidad de paneles y compatibilidad con tu sistema',
-    image: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=800',
-    badge: 'Venta unitaria',
-    price: 185000,
-    currency: 'USD',
-    priceNote: 'Precio de referencia por unidad. No incluye estructura ni instalación.',
-    availability: 'Consultar stock',
-  },
-  {
-    id: 'cat-inversor-hibrido-6kw',
-    slug: 'inversor-hibrido-6kw',
-    name: 'Inversor híbrido 6 kW',
-    category: 'solar',
-    description: 'Inversor híbrido para administrar paneles, red eléctrica y baterías en proyectos con ahorro y respaldo energético.',
-    specifications: ['Potencia nominal: 6 kW', 'Operación con paneles, red y baterías', 'Monitoreo remoto compatible', 'Protecciones y configuración según proyecto'],
-    idealFor: ['Viviendas con respaldo', 'Comercios', 'Sistemas híbridos'],
-    detailIntro: 'Equipo central para un sistema híbrido: gestiona el uso de energía solar, la carga de baterías y el suministro de la red según la configuración definida para cada proyecto.',
-    detailPoints: ['El modelo exacto debe validarse por tensión, fases, potencia de consumo y banco de baterías.', 'Puede integrarse con un tablero de cargas críticas para respaldo ante cortes.', 'El precio no contempla baterías, paneles, protecciones ni mano de obra.'],
-    consultationFocus: 'compatibilidad eléctrica, configuración de baterías y stock del inversor',
-    image: 'https://images.unsplash.com/photo-1497440001374-f26997328c1b?auto=format&fit=crop&q=80&w=800',
-    badge: 'Respaldo',
-    price: 1650000,
-    currency: 'USD',
-    priceNote: 'Precio de referencia del equipo. Configuración e instalación se cotizan aparte.',
-    availability: 'Consultar stock',
-  },
-  {
-    id: 'cat-bateria-lifepo4-5kwh',
-    slug: 'bateria-lifepo4-5kwh',
-    name: 'Batería de litio LiFePO4 5 kWh',
-    category: 'storage',
-    description: 'Batería de litio para almacenamiento solar y respaldo de consumos críticos en instalaciones compatibles.',
-    specifications: ['Capacidad nominal: 5 kWh', 'Tecnología LiFePO4', 'Sistema de gestión de batería integrado', 'Capacidad ampliable según compatibilidad'],
-    idealFor: ['Sistemas híbridos', 'Respaldo de cargas críticas', 'Ampliaciones de autonomía'],
-    detailIntro: 'Una batería LiFePO4 permite almacenar energía generada durante el día para usarla cuando baja la producción solar o ante un corte de la red.',
-    detailPoints: ['La autonomía real depende de la potencia y el tiempo de uso de las cargas a respaldar.', 'Debe seleccionarse junto con un inversor compatible y las protecciones correspondientes.', 'Consultá por ciclos, garantía y disponibilidad de la marca vigente.'],
-    consultationFocus: 'autonomía requerida, compatibilidad con inversor y stock de baterías',
-    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=800',
-    badge: 'Almacenamiento',
-    price: 2450000,
-    currency: 'USD',
-    priceNote: 'Precio de referencia por batería. No incluye inversor ni instalación.',
-    availability: 'Consultar stock',
-  },
-];
 
 export const solutionsData: Solution[] = [
   {
