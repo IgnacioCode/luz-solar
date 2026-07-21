@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import {
   Cable,
   Car,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Droplets,
@@ -62,6 +63,7 @@ export default function Products({ products, onAddToCart }: ProductsProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(3);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   useEffect(() => {
     const updateProductsPerPage = () => setProductsPerPage(getProductsPerPage(window.innerWidth));
@@ -135,9 +137,14 @@ export default function Products({ products, onAddToCart }: ProductsProps) {
                   Filtrar productos
                 </h3>
               </div>
+              <button type="button" onClick={() => setIsFiltersOpen((isOpen) => !isOpen)} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-2 text-xs font-bold text-[#006CB5] transition hover:bg-slate-50 sm:hidden" aria-expanded={isFiltersOpen} aria-controls="product-filter-options">
+                {isFiltersOpen ? 'Ocultar' : 'Ver filtros'}
+                <ChevronDown className={`h-4 w-4 transition ${isFiltersOpen ? 'rotate-180' : ''}`} />
+              </button>
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-1">
+            <div id="product-filter-options" className={`${isFiltersOpen ? 'flex' : 'hidden'} flex-col gap-4 sm:flex`}>
+            <div className="flex flex-col gap-2 sm:flex-row sm:overflow-x-auto sm:pb-1">
               {categories.map((category) => (
                 <button
                   key={category.value}
@@ -145,7 +152,7 @@ export default function Products({ products, onAddToCart }: ProductsProps) {
                     setSelectedCategory(category.value);
                     setCurrentPage(1);
                   }}
-                  className={`group inline-flex h-11 shrink-0 items-center gap-2 rounded-xl border px-3 text-left transition-all ${
+                  className={`group inline-flex h-11 w-full items-center justify-between gap-2 rounded-xl border px-4 text-left transition-all sm:w-auto sm:shrink-0 sm:justify-start sm:px-3 ${
                     selectedCategory === category.value
                       ? 'border-[#006CB5] bg-[#006CB5] text-white shadow-sm'
                       : 'border-slate-200 bg-white text-slate-600 hover:border-[#006CB5]/35 hover:bg-slate-50 hover:text-[#006CB5]'
@@ -188,6 +195,7 @@ export default function Products({ products, onAddToCart }: ProductsProps) {
                   </button>
                 ) : null}
               </div>
+            </div>
             </div>
           </div>
         </div>
@@ -247,7 +255,7 @@ export default function Products({ products, onAddToCart }: ProductsProps) {
             })}
             </div>
             {totalPages > 1 ? (
-              <nav className="order-2 mt-5 flex flex-wrap items-center justify-center gap-2 sm:order-3 sm:mt-10" aria-label="Paginación del catálogo">
+              <nav className="order-2 mt-5 mb-6 flex flex-wrap items-center justify-center gap-2 sm:order-3 sm:mb-0 sm:mt-10" aria-label="Paginación del catálogo">
                 <button type="button" onClick={() => setCurrentPage((page) => Math.max(1, page - 1))} disabled={visiblePage === 1} className="inline-flex h-10 items-center justify-center gap-1 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:border-[#006CB5]/40 hover:text-[#006CB5] disabled:cursor-not-allowed disabled:opacity-40"><ChevronLeft className="h-4 w-4" />Anterior</button>
                 {pageNumbers.map((page) => <button key={page} type="button" onClick={() => setCurrentPage(page)} aria-current={visiblePage === page ? 'page' : undefined} className={`flex h-10 min-w-10 items-center justify-center rounded-lg px-3 text-xs font-bold transition ${visiblePage === page ? 'bg-[#006CB5] text-white shadow-sm' : 'border border-slate-200 text-slate-600 hover:border-[#006CB5]/40 hover:text-[#006CB5]'}`}>{page}</button>)}
                 <button type="button" onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))} disabled={visiblePage === totalPages} className="inline-flex h-10 items-center justify-center gap-1 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:border-[#006CB5]/40 hover:text-[#006CB5] disabled:cursor-not-allowed disabled:opacity-40">Siguiente<ChevronRight className="h-4 w-4" /></button>
