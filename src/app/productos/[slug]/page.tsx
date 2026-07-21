@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   CheckCircle2,
   CreditCard,
-  MessageSquare,
   PackageCheck,
   ShieldCheck,
   ShoppingBag,
@@ -13,9 +12,11 @@ import {
 } from 'lucide-react';
 import { productCategoryLabels } from '@/src/data';
 import { getAllCatalogProducts, getMergedProductBySlug } from '@/src/lib/products';
-import { buildWhatsAppUrl, siteConfig } from '@/src/siteConfig';
+import { siteConfig } from '@/src/siteConfig';
 import BrandLogo from '@/src/components/BrandLogo';
 import ProductGallery from '@/src/components/ProductGallery';
+import CartButton from '@/src/components/CartButton';
+import ProductAddToCartButton from '@/src/components/ProductAddToCartButton';
 
 type ProductDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -49,10 +50,6 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   }
 
   const price = formatPrice(product.price, product.currency ?? 'USD');
-  const whatsappUrl = buildWhatsAppUrl(
-    `Hola Luz Solar! Quiero comprar o consultar por *${product.name}* (${price}). ¿Me confirman ${product.availability?.toLowerCase() ?? 'stock'}, envío y formas de pago?`,
-  );
-
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
       <header className="border-b border-slate-200 bg-white">
@@ -61,17 +58,16 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
             <ArrowLeft className="h-4 w-4" />
             Volver al catálogo
           </Link>
-          <BrandLogo />
+          <div className="flex items-center gap-3"><BrandLogo /><CartButton /></div>
         </div>
       </header>
 
       <section className="pb-10">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 lg:px-8">
         <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Inicio / Catálogo / {productCategoryLabels[product.category]}</p>
         <div className="mt-5 grid gap-8 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-6">
             <ProductGallery images={product.images?.length ? product.images : [product.image]} name={product.name} badge={product.badge} />
-            <div className="mt-4 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-500">Imagen ilustrativa. Consultá por marca, modelo y disponibilidad vigente.</div>
           </div>
 
           <div className="lg:col-span-5">
@@ -85,10 +81,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                 <p className="mt-1 text-4xl font-extrabold tracking-tight text-[#006CB5]">{price}</p>
                 <p className="mt-2 text-xs leading-relaxed text-slate-500">{product.priceNote ?? 'Precio sujeto a disponibilidad y configuración del producto.'}</p>
                 <div className="mt-4 flex items-center gap-2 rounded-lg bg-[#6DA42C]/10 px-3 py-2 text-xs font-bold text-[#47771c]"><CheckCircle2 className="h-4 w-4" />{product.availability ?? 'Consultar disponibilidad'}</div>
-                <a href={whatsappUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#F98A1E] px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#F98A1E]/20 transition hover:bg-[#E47412]">
-                  <MessageSquare className="h-5 w-5" />
-                  Consultar compra por WhatsApp
-                </a>
+                <ProductAddToCartButton product={product} />
                 <p className="mt-3 text-center text-[11px] text-slate-400">Te confirmamos stock, entrega y medios de pago antes de concretar la compra.</p>
               </div>
               <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">

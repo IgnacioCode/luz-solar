@@ -1,8 +1,8 @@
 export const siteConfig = {
   brandName: 'Luz Solar SRL',
   whatsapp: {
-    phoneE164: '5491140420816',
-    display: '+54 11 4042-0816',
+    phoneE164: '5491155082413',
+    display: '11 5508 2413',
   },
   location: {
     base: 'Morón',

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ArrowLeft, CheckCircle, Info, Ruler, ShoppingBag } from 'lucide-react';
 import { getSolarTopicBySlug, productCategoryLabels, solarTopicsData } from '@/src/data';
 import BrandLogo from '@/src/components/BrandLogo';
+import CartButton from '@/src/components/CartButton';
 
 type SolutionDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -51,6 +52,7 @@ export default async function SolutionDetailPage({ params }: SolutionDetailPageP
                 Ver catálogo
               </Link>
               <BrandLogo textClassName="text-white" subTextClassName="text-white/75" />
+              <CartButton theme="dark" />
             </div>
           </div>
           <div className="max-w-3xl">

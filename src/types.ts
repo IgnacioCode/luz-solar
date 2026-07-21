@@ -26,6 +26,11 @@ export interface CatalogProduct extends Product {
   availability?: string;
 }
 
+export interface CartItem {
+  product: CatalogProduct;
+  quantity: number;
+}
+
 export interface ProductDetailSection {
   title: string;
   body?: string[];

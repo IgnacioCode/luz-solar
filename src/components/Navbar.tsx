@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, ShoppingCart } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
 interface NavbarProps {
   onScrollToSection: (sectionId: string) => void;
+  onOpenCart: () => void;
+  cartItemCount: number;
 }
 
-export default function Navbar({ onScrollToSection }: NavbarProps) {
+export default function Navbar({ onScrollToSection, onOpenCart, cartItemCount }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -23,7 +25,7 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
   }, []);
 
   const menuItems = [
-    { label: 'Beneficios', id: 'beneficios' },
+    //{ label: 'Beneficios', id: 'beneficios' },
     { label: 'Servicios', id: 'alcance' },
     { label: 'Soluciones', id: 'soluciones' },
     { label: 'Guía solar', id: 'conceptos' },
@@ -36,6 +38,11 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
   const handleLinkClick = (id: string) => {
     setIsOpen(false);
     onScrollToSection(id);
+  };
+
+  const handleOpenCart = () => {
+    setIsOpen(false);
+    onOpenCart();
   };
 
   const logoTextClass = isScrolled ? 'text-[#006CB5]' : 'text-white';
@@ -83,10 +90,28 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
               <Phone className="w-4 h-4" />
               <span>WhatsApp</span>
             </button>
+            <button
+              type="button"
+              onClick={handleOpenCart}
+              className={`relative inline-flex h-10 w-10 items-center justify-center rounded-full transition ${isScrolled ? 'border border-slate-200 text-[#006CB5] hover:bg-slate-50' : 'border border-white/30 text-white hover:bg-white/10'}`}
+              aria-label={`Abrir carrito${cartItemCount ? `, ${cartItemCount} productos` : ''}`}
+            >
+              <ShoppingCart className="h-4 w-4" />
+              {cartItemCount > 0 ? <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#F98A1E] px-1 text-[10px] font-extrabold text-white">{cartItemCount}</span> : null}
+            </button>
           </div>
 
           {/* Mobile menu button */}
           <div id="mobile-menu-btn" className="flex items-center lg:hidden">
+            <button
+              type="button"
+              onClick={handleOpenCart}
+              className={`${mobileButtonClass} relative mr-1 rounded-lg p-2 transition-colors`}
+              aria-label={`Abrir carrito${cartItemCount ? `, ${cartItemCount} productos` : ''}`}
+            >
+              <ShoppingCart className="h-5 w-5" />
+              {cartItemCount > 0 ? <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#F98A1E] px-1 text-[9px] font-extrabold text-white">{cartItemCount}</span> : null}
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className={`${mobileButtonClass} p-2 rounded-lg transition-colors`}
@@ -112,6 +137,14 @@ export default function Navbar({ onScrollToSection }: NavbarProps) {
               </button>
             ))}
             <div className="pt-4 pb-2 border-t border-slate-200 px-3 space-y-2">
+              <button
+                type="button"
+                onClick={handleOpenCart}
+                className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#006CB5]/20 px-4 py-3 text-sm font-bold text-[#006CB5] transition hover:bg-slate-50"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                Ver carrito{cartItemCount > 0 ? ` (${cartItemCount})` : ''}
+              </button>
               <button
                 onClick={() => handleLinkClick('contacto')}
                 className="flex items-center justify-center space-x-2 w-full px-4 py-3 text-sm font-bold rounded-lg bg-[#F98A1E] text-white hover:bg-[#E47412] shadow-lg shadow-[#F98A1E]/20"

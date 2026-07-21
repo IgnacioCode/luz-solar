@@ -1,26 +1,20 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  BatteryCharging,
-  BatteryFull,
   Cable,
-  Camera,
   Car,
-  CircuitBoard,
+  ChevronLeft,
+  ChevronRight,
   Droplets,
-  Heater,
-  Info,
-  MessageSquare,
+  Search,
   SolarPanel,
+  ShoppingCart,
   Sun,
-  ThermometerSun,
-  Waves,
-  Wrench,
+  X,
   Zap,
   type LucideIcon,
 } from 'lucide-react';
 import { productCategoryLabels } from '../data';
-import { buildWhatsAppUrl } from '../siteConfig';
 import type { CatalogProduct, Product } from '../types';
 
 type CategoryFilter = {
@@ -29,41 +23,19 @@ type CategoryFilter = {
   icon: LucideIcon;
 };
 
-const productIconsBySlug: Record<string, LucideIcon> = {
-  'kits-solares-on-grid': SolarPanel,
-  'kits-solares-hibridos': SolarPanel,
-  'kits-solares-off-grid': SolarPanel,
-  'movilidad-electrica': Car,
-  'estaciones-de-carga-portatiles': BatteryCharging,
-  'paneles-solares': SolarPanel,
-  inversores: Zap,
-  'baterias-de-litio': BatteryCharging,
-  'estructuras-para-paneles': Wrench,
-  'baterias-de-plomo': BatteryFull,
-  'luminarias-y-camaras': Camera,
-  'componentes-electricos': CircuitBoard,
-  'bombas-de-calor-piscina': Heater,
-  'colectores-solares-piscina': Waves,
-  'bombeo-solar': Droplets,
-  'termotanque-solar': ThermometerSun,
-};
-
 const categoryIcons: Record<Product['category'] | 'all', LucideIcon> = {
   all: Sun,
   kits: Sun,
   solar: SolarPanel,
-  storage: BatteryCharging,
+  storage: Zap,
   electrical: Cable,
   water: Droplets,
   mobility: Car,
 };
 
-function getProductIcon(product: Product) {
-  return productIconsBySlug[product.slug] ?? categoryIcons[product.category];
-}
-
 type ProductsProps = {
   products: CatalogProduct[];
+  onAddToCart: (product: CatalogProduct) => void;
 };
 
 function formatPrice(product: CatalogProduct) {
@@ -72,9 +44,31 @@ function formatPrice(product: CatalogProduct) {
   return `${currency === 'USD' ? 'U$S' : '$'} ${amount}`;
 }
 
-export default function Products({ products }: ProductsProps) {
+function normalizeSearchTerm(value: string) {
+  return value.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase('es-AR');
+}
+
+function getProductsPerPage(viewportWidth: number) {
+  if (viewportWidth >= 1536) return 10;
+  if (viewportWidth >= 1280) return 8;
+  if (viewportWidth >= 1024) return 6;
+  if (viewportWidth >= 640) return 4;
+  return 3;
+}
+
+export default function Products({ products, onAddToCart }: ProductsProps) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<Product['category'] | 'all'>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(3);
+
+  useEffect(() => {
+    const updateProductsPerPage = () => setProductsPerPage(getProductsPerPage(window.innerWidth));
+    updateProductsPerPage();
+    window.addEventListener('resize', updateProductsPerPage);
+    return () => window.removeEventListener('resize', updateProductsPerPage);
+  }, []);
 
   const categories = useMemo<CategoryFilter[]>(() => [
     { value: 'all', label: productCategoryLabels.all, icon: categoryIcons.all },
@@ -96,13 +90,23 @@ export default function Products({ products }: ProductsProps) {
   }, [categories, products]);
 
   const filteredProducts = useMemo(() => {
-    return products.filter((product) => selectedCategory === 'all' || product.category === selectedCategory);
-  }, [products, selectedCategory]);
+    const normalizedSearch = normalizeSearchTerm(searchTerm.trim());
+    return products.filter((product) => {
+      const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+      const searchableContent = normalizeSearchTerm(`${product.name} ${product.description} ${productCategoryLabels[product.category]}`);
+      return matchesCategory && (!normalizedSearch || searchableContent.includes(normalizedSearch));
+    });
+  }, [products, searchTerm, selectedCategory]);
 
-  const handleWhatsAppConsultation = (product: CatalogProduct) => {
-    const baseText = `Hola Luz Solar! Estaba revisando su catálogo web y me interesa consultar por el producto: *${product.name}* (${formatPrice(product)}). ¿Podrían confirmarme disponibilidad, envío e instalación si corresponde? Muchas gracias.`;
-    window.open(buildWhatsAppUrl(baseText), '_blank');
-  };
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage));
+  const visiblePage = Math.min(currentPage, totalPages);
+  const pageStart = (visiblePage - 1) * productsPerPage;
+  const visibleProducts = filteredProducts.slice(pageStart, pageStart + productsPerPage);
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  useEffect(() => {
+    setCurrentPage((page) => Math.min(page, totalPages));
+  }, [totalPages]);
 
   const openProductDetail = (slug: string) => {
     router.push(`/productos/${slug}`);
@@ -137,7 +141,10 @@ export default function Products({ products }: ProductsProps) {
               {categories.map((category) => (
                 <button
                   key={category.value}
-                  onClick={() => setSelectedCategory(category.value)}
+                  onClick={() => {
+                    setSelectedCategory(category.value);
+                    setCurrentPage(1);
+                  }}
                   className={`group inline-flex h-11 shrink-0 items-center gap-2 rounded-xl border px-3 text-left transition-all ${
                     selectedCategory === category.value
                       ? 'border-[#006CB5] bg-[#006CB5] text-white shadow-sm'
@@ -159,77 +166,106 @@ export default function Products({ products }: ProductsProps) {
                 </button>
               ))}
             </div>
+
+            <div className="border-t border-slate-100 pt-4">
+              <label htmlFor="product-search" className="mb-2 block text-xs font-bold text-slate-600">Buscar en el catálogo</label>
+              <div className="relative">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input
+                  id="product-search"
+                  type="search"
+                  value={searchTerm}
+                  onChange={(event) => {
+                    setSearchTerm(event.target.value);
+                    setCurrentPage(1);
+                  }}
+                  placeholder="Ej. panel, batería, inversor..."
+                  className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-10 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#006CB5] focus:bg-white focus:ring-2 focus:ring-[#006CB5]/15"
+                />
+                {searchTerm ? (
+                  <button type="button" onClick={() => { setSearchTerm(''); setCurrentPage(1); }} className="absolute right-2 top-1/2 rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-200 hover:text-slate-700" aria-label="Limpiar búsqueda">
+                    <X className="h-4 w-4" />
+                  </button>
+                ) : null}
+              </div>
+            </div>
           </div>
         </div>
 
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {filteredProducts.map((product) => {
-              const ProductIcon = getProductIcon(product);
+          <>
+            <div className="flex flex-col">
+              <div className="order-1 mb-5 flex items-center justify-between gap-3 text-xs text-slate-500">
+                <p>{filteredProducts.length} {filteredProducts.length === 1 ? 'producto encontrado' : 'productos encontrados'}</p>
+                <p className="font-medium">Mostrando {pageStart + 1}-{Math.min(pageStart + productsPerPage, filteredProducts.length)}</p>
+              </div>
+            <div className="order-3 grid grid-cols-1 gap-5 sm:order-2 sm:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-5">
+            {visibleProducts.map((product) => {
+              const primaryImage = product.images?.[0] ?? product.image;
 
               return (
                 <article
                   key={product.id}
-                  className="group flex h-full min-w-0 cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#006CB5]/40 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#006CB5]"
-                  onClick={() => openProductDetail(product.slug)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault();
-                      openProductDetail(product.slug);
-                    }
-                  }}
-                  role="link"
-                  tabIndex={0}
-                  aria-label={`Ver detalle de ${product.name}`}
+                  className="group flex h-full min-w-0 flex-col rounded-[2rem] border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl"
                 >
-                  <div className="flex min-w-0 flex-1 gap-4 p-4">
-                    <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-[#006CB5]/5 text-[#006CB5] shadow-sm transition-colors group-hover:border-[#006CB5]/30 group-hover:bg-[#006CB5]/10">
-                      <ProductIcon className="relative h-10 w-10 transition-transform duration-300 group-hover:scale-105" strokeWidth={1.8} />
-                    </div>
+                  <button
+                    type="button"
+                    onClick={() => openProductDetail(product.slug)}
+                    className="relative aspect-square w-full overflow-hidden rounded-[1.5rem] bg-slate-100 text-left"
+                    aria-label={`Ver detalle de ${product.name}`}
+                  >
+                    <span className="absolute left-4 top-4 z-10 rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-[10px] font-bold text-slate-900 shadow-sm backdrop-blur-sm">{productCategoryLabels[product.category]}</span>
+                    <img src={primaryImage} alt={product.name} className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105" referrerPolicy="no-referrer" />
+                  </button>
 
-                    <div className="min-w-0 flex-1 space-y-2">
-                      <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-[#006CB5]">
-                        {productCategoryLabels[product.category]}
-                      </span>
-                      <h3 className="line-clamp-2 block break-words text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-[#006CB5]">
+                  <div className="flex min-w-0 flex-1 flex-col px-2 pb-2 pt-5">
+                    <span className="block text-xs font-medium text-[#4f8721]">
+                      {productCategoryLabels[product.category]}
+                    </span>
+                    <button type="button" onClick={() => openProductDetail(product.slug)} className="mt-1.5 text-left">
+                      <h3 className="line-clamp-2 break-words text-base font-bold leading-snug text-slate-900 transition group-hover:text-[#006CB5]">
                         {product.name}
                       </h3>
-                      <p className="line-clamp-3 text-xs leading-relaxed text-slate-500 sm:line-clamp-2">
-                        {product.description}
-                      </p>
-                      <div>
-                        <p className="text-lg font-extrabold tracking-tight text-[#006CB5]">{formatPrice(product)}</p>
-                        <p className="text-[10px] font-medium text-slate-400">{product.availability ?? 'Consultar disponibilidad'}</p>
-                      </div>
+                    </button>
+                    <div className="mt-auto pt-4">
+                      <p className="text-lg font-medium tracking-tight text-black">{formatPrice(product)}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 border-t border-slate-100 p-3 sm:p-4">
-                    <span className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition group-hover:border-[#006CB5]/50 group-hover:bg-slate-50 group-hover:text-[#006CB5] sm:inline-flex" aria-hidden="true">
-                      <Info className="h-4 w-4" />
-                    </span>
+                  <div className="px-2 pb-2 pt-2">
                     <button
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleWhatsAppConsultation(product);
-                      }}
-                      className="inline-flex h-9 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg border border-[#F98A1E]/20 bg-[#F98A1E]/10 px-3 text-xs font-bold text-[#C45F0E] transition hover:border-[#F98A1E] hover:bg-[#F98A1E] hover:text-white"
+                      type="button"
+                      onClick={() => onAddToCart(product)}
+                      className="inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-full bg-[#F98A1E] px-3 text-xs font-bold text-white transition hover:bg-[#E47412]"
                     >
-                      <MessageSquare className="h-4 w-4 shrink-0" />
-                      <span>Consultar compra</span>
+                      <ShoppingCart className="h-4 w-4 shrink-0" />
+                      Agregar al carrito
                     </button>
                   </div>
                 </article>
               );
             })}
-          </div>
+            </div>
+            {totalPages > 1 ? (
+              <nav className="order-2 mt-5 flex flex-wrap items-center justify-center gap-2 sm:order-3 sm:mt-10" aria-label="Paginación del catálogo">
+                <button type="button" onClick={() => setCurrentPage((page) => Math.max(1, page - 1))} disabled={visiblePage === 1} className="inline-flex h-10 items-center justify-center gap-1 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:border-[#006CB5]/40 hover:text-[#006CB5] disabled:cursor-not-allowed disabled:opacity-40"><ChevronLeft className="h-4 w-4" />Anterior</button>
+                {pageNumbers.map((page) => <button key={page} type="button" onClick={() => setCurrentPage(page)} aria-current={visiblePage === page ? 'page' : undefined} className={`flex h-10 min-w-10 items-center justify-center rounded-lg px-3 text-xs font-bold transition ${visiblePage === page ? 'bg-[#006CB5] text-white shadow-sm' : 'border border-slate-200 text-slate-600 hover:border-[#006CB5]/40 hover:text-[#006CB5]'}`}>{page}</button>)}
+                <button type="button" onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))} disabled={visiblePage === totalPages} className="inline-flex h-10 items-center justify-center gap-1 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-600 transition hover:border-[#006CB5]/40 hover:text-[#006CB5] disabled:cursor-not-allowed disabled:opacity-40">Siguiente<ChevronRight className="h-4 w-4" /></button>
+              </nav>
+            ) : null}
+            </div>
+          </>
         ) : (
           <div className="mx-auto max-w-lg rounded-3xl border border-dashed border-slate-200 bg-white px-6 py-16 text-center">
             <p className="text-sm font-medium text-slate-500">
-              No encontramos productos para esta categoria.
+              No encontramos productos para estos filtros.
             </p>
             <button
-              onClick={() => setSelectedCategory('all')}
+              onClick={() => {
+                setSelectedCategory('all');
+                setSearchTerm('');
+                setCurrentPage(1);
+              }}
               className="mt-4 inline-flex items-center text-xs font-bold text-[#006CB5] hover:underline"
             >
               Ver todos los productos

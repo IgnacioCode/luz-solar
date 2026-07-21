@@ -18,6 +18,7 @@ import Footer from './components/Footer';
 import { ArrowUp, MessageSquare } from 'lucide-react';
 import { buildWhatsAppUrl } from './siteConfig';
 import { solarTopicsData } from './data';
+import { useCart } from './components/CartProvider';
 import type { CatalogProduct } from './types';
 
 type AppProps = {
@@ -26,6 +27,7 @@ type AppProps = {
 
 export default function App({ products }: AppProps) {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const { addToCart, cartItemCount, openCart } = useCart();
   const [preFilledInquiry, setPreFilledInquiry] = useState<{
     clientType: 'hogar' | 'comercio' | 'industria' | 'campo';
     monthlyBill: number;
@@ -73,6 +75,8 @@ export default function App({ products }: AppProps) {
       {/* Sticky Navigation Header */}
       <Navbar
         onScrollToSection={handleScrollToSection}
+        onOpenCart={openCart}
+        cartItemCount={cartItemCount}
       />
 
       {/* Main Page Contents */}
@@ -98,7 +102,7 @@ export default function App({ products }: AppProps) {
         <SolarGuide topics={solarTopicsData} onExploreCatalog={() => handleScrollToSection('catalogo')} />
 
         {/* Commercial Catalog */}
-        <Products products={products} />
+        <Products products={products} onAddToCart={addToCart} />
 
         {/* Visual Methodology Timeline */}
         <Process />
