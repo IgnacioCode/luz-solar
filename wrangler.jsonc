@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "luz-solar",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-07-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // El dominio personalizado se administra desde el dashboard de Cloudflare.
+  // Sin `routes` locales, esto evita que un deploy intente reemplazarlo.
+  "workers_dev": false,
+  // Las URLs de preview estaban deshabilitadas en el Worker remoto; lo declaramos
+  // explícitamente para conservar ese comportamiento sin advertencias.
+  "preview_urls": false,
+  // Las variables de producción se administran en Cloudflare, no en el repositorio.
+  // Así, cada `npx wrangler deploy` conserva las variables existentes en el Worker.
+  "keep_vars": true
+}
